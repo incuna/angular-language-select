@@ -1,0 +1,7 @@
+<div class="select-wrapper">
+    <select
+        ng-model="selectedLanguage"
+        ng-change="changeLanguage()"
+        ng-options="language.id as language.label for language in languageChoices">
+    </select>
+</div>

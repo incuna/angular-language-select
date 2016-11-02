@@ -1,0 +1,46 @@
+{
+  "name": "angular-language-select",
+  "version": "0.0.1",
+  "description": "Language / locale select",
+  "main": "web/es5/main.js",
+  "repository": {
+    "type": "git",
+    "url": "incuna/angular-language-select.git"
+  },
+  "keywords": [
+    "angular",
+    "language",
+    "locale"
+  ],
+  "license": "MIT",
+  "author": "Max Peterson <max@incuna.com> (http://www.incuna.com)",
+  "bugs": {
+    "url": "https://github.com/incuna/angular-language-select/issues"
+  },
+  "contributors": [
+    "Graham Gilchrist <graham@incuna.com>",
+    "Max Peterson <max@incuna.com>",
+    "Marcin Wolniewicz <marcin@incuna.com>",
+    "Henry Blyth <henry@incuna.com>"
+  ],
+  "dependencies": {},
+  "files": [
+    "dist"
+  ],
+  "devDependencies": {
+    "babel-preset-es2015": "^6.18.0",
+    "grunt": "^1.0.1",
+    "grunt-angular-templates": "^1.1.0",
+    "grunt-babel": "^6.0.0",
+    "grunt-browserify": "^5.0.0",
+    "grunt-cli": "^1.2.0",
+    "grunt-contrib-clean": "^1.0.0",
+    "grunt-contrib-uglify": "^2.0.0",
+    "grunt-contrib-watch": "^1.0.0",
+    "grunt-eslint": "^19.0.0",
+    "grunt-incuna-plugins": "git://github.com/incuna/grunt-incuna-plugins.git#1.2.0",
+    "grunt-jscs": "^3.0.1",
+    "grunt-swig-templates": "^0.1.4",
+    "jit-grunt": "^0.10.0"
+  }
+}
