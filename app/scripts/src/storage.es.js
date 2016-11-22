@@ -1,14 +1,15 @@
-import { angular } from 'libraries';
+import { angular } from './libraries.es';
+
+import './config.es';
 
 // Module which is responsible for working out which language should be used by the app,
 //  and storing this between page refreshes
 
-var module = angular.module('language-select.storage-service', [
+const module = angular.module('language-select.storage-service', [
     'ngCookies',
     'language-select.config'
 ]);
 
-// Factory which deals with the actual storage and get/set of current language
 module.factory('languageStorage', [
     '$rootScope',
     '$cookies',
@@ -16,27 +17,25 @@ module.factory('languageStorage', [
     'languageSelectConfig',
     function ($rootScope, $cookies, $window, languageSelectConfig) {
 
-        // Return a version of the language code for comparison.
-        var sanitise = function (language) {
-            return language.toLowerCase().replace(/-/g, '_');
+        const normaliseLanguageCode = function (languageCode) {
+            return languageCode.toLowerCase().replace(/-/g, '_');
         };
 
-        var languageChoices = languageSelectConfig.availableLanguages();
-        // Map of language choices keyed by "sanitised" ids.
-        var languageMap = _.keyBy(languageChoices, function (choices) {
-            return sanitise(choices.id);
+        const languageChoices = languageSelectConfig.availableLanguages();
+
+        const normalisedLanguageChoices = _.keyBy(languageChoices, function (choices) {
+            return normaliseLanguageCode(choices.id);
         });
 
-        // Private variable we use to store the selected language
-        var selectedLanguage;
+        let selectedLanguage;
 
-        // Methods we will expose as the factory's public API
-        var languageStorage = {
+        const publicMethods = {
             getLanguageChoices: function () {
                 return languageChoices;
             },
-            getLanguageChoice: function (languageId) {
-                return languageMap[sanitise(languageId || selectedLanguage)];
+            getLanguageChoice: function (languageId = selectedLanguage) {
+                const languageCode = normaliseLanguageCode(languageId);
+                return normalisedLanguageChoices[languageCode];
             },
             get: function () {
                 return selectedLanguage;
@@ -48,36 +47,27 @@ module.factory('languageStorage', [
             }
         };
 
-        var determineStartingLanguage = function () {
-            // First we check to see if a cookie language exists, then we see if its valid.
-            // If valid we make it the selected language.
-            var cookieLanguage = $cookies.get('selectedLanguage');
-            var browserLanguage = $window.navigator.language || $window.navigator.userLanguage;
-
-            var choice;
-            if (angular.isDefined(cookieLanguage)) {
-                choice = languageStorage.getLanguageChoice(cookieLanguage);
-                if (angular.isDefined(choice)) {
-                    // We found a valid language in the cookie, so use that
-                    return choice.id;
-                }
-            } else if (angular.isDefined(browserLanguage)) {
-                // if the cookie doesn't exist/invalid then check language from the browser to
-                // set as default.
-                choice = languageStorage.getLanguageChoice(browserLanguage);
-                if (angular.isDefined(choice)) {
-                    // We found a valid language in the cookie, so use that
-                    return choice.id;
-                }
+        const checkLanguage = function (language) {
+            if (angular.isDefined(language)) {
+                choice = publicMethods.getLanguageChoice(language);
+                return choice && choice.id;
             }
-
-            return languageSelectConfig.defaultLanguage();
         };
 
-        // When we first load this factory, set the initial selectedlanguage
-        var startingLanguage = determineStartingLanguage();
-        languageStorage.set(startingLanguage);
+        const determineStartingLanguage = function () {
+            const cookieLanguage = $cookies.get('selectedLanguage');
+            const browserLanguage = $window.navigator.language || $window.navigator.userLanguage;
 
-        return languageStorage;
+            const cookieLangaugeChoice = checkLanguage(cookieLanguage);
+            const browserLanguageChoice = checkLanguage(browserLanguage);
+            const defaultLanguage = languageSelectConfig.defaultLanguage();
+
+            return cookieLangaugeChoice || browserLanguageChoice || defaultLanguage;
+        };
+
+        const startingLanguage = determineStartingLanguage();
+        publicMethods.set(startingLanguage);
+
+        return publicMethods;
     }
 ]);

@@ -1,15 +1,15 @@
-import { angular } from 'libraries';
-
-// Module for providing configuration options
+import { angular } from './libraries.es';
 
 const module = angular.module('language-select.config', []);
 
 module.provider('languageSelectConfig', function () {
-    var availableLanguages = [{
-        id: 'en',
-        label: 'English'
-    }];
-    var defaultLanguage = null;
+    let availableLanguages = [
+        {
+            id: 'en',
+            label: 'English'
+        }
+    ];
+    let defaultLanguage = null;
 
     return {
         $get: function () {

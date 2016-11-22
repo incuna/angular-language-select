@@ -1,6 +1,6 @@
-import { angular } from 'libraries';
+import { angular } from './libraries.es';
 
-import './storage';
+import './storage.es';
 
 // This module provides a directive which shows the currently selected language
 //  and allows the selected language to be chnaged.
@@ -18,13 +18,9 @@ module.directive('languageSelector', [
             templateUrl: 'templates/language-select/language-options.html',
             scope: {},
             link: function (scope) {
-                // Make languages and current language available to template scope
                 scope.selectedLanguage = languageStorage.get();
                 scope.languageChoices = languageStorage.getLanguageChoices();
 
-                // Call this in template when changing language
-                //  @param language {object} a single language object as
-                //  returned by getLanguageChoices()
                 scope.changeLanguage = function () {
                     languageStorage.set(scope.selectedLanguage);
                     $window.location.reload();
