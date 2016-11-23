@@ -50,7 +50,7 @@ module.exports = function (grunt) {
         watch: {
             es: {
                 files: [
-                    '<%= config.srcScriptsDir %>/**/*.es.js',
+                    '<%= config.srcScriptsDir %>/**/*.js',
                     '<%= config.compiledScriptsDir %>/**/templates.js'
                 ],
                 tasks: [
@@ -86,7 +86,7 @@ module.exports = function (grunt) {
                 files: [{
                     expand: true,
                     cwd: '<%= config.srcScriptsDir %>',
-                    src: ['**/*.es.js'],
+                    src: ['**/*.js'],
                     dest: '<%= config.compiledScriptsDir %>',
                     ext: '.js'
                 }]

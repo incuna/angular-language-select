@@ -47,7 +47,7 @@ module.factory('languageStorage', [
 
         const checkLanguage = function (language) {
             if (angular.isDefined(language)) {
-                choice = publicMethods.getLanguageChoice(language);
+                const choice = publicMethods.getLanguageChoice(language);
                 return choice && choice.id;
             }
         };
