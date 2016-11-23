@@ -1,7 +1,7 @@
 'use strict';
 
-var _libraries = require('././libraries.js');
+var _libraries = require('./libraries');
 
-require('././switch.js');
+require('./switch');
 
 _libraries.angular.module('language-select', ['language-select.switch']);

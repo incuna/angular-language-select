@@ -1,7 +1,7 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 'use strict';
 
-var _libraries = require('././libraries.js');
+var _libraries = require('./libraries');
 
 var _module = _libraries.angular.module('language-select.config', []);
 
@@ -32,12 +32,12 @@ _module.provider('languageSelectConfig', function () {
     };
 });
 
-},{"././libraries.js":4}],2:[function(require,module,exports){
+},{"./libraries":4}],2:[function(require,module,exports){
 'use strict';
 
-var _libraries = require('././libraries.js');
+var _libraries = require('./libraries');
 
-require('././storage.js');
+require('./storage');
 
 // Module registers an http interceptor which adds the http header
 //  for the currently selected language to every API request
@@ -57,7 +57,7 @@ _module.factory('languageInterceptor', ['languageStorage', function (languageSto
     return languageInterceptor;
 }]);
 
-},{"././libraries.js":4,"././storage.js":7}],3:[function(require,module,exports){
+},{"./libraries":4,"./storage":7}],3:[function(require,module,exports){
 angular.module('-language-select.templates', []).run(['$templateCache', function($templateCache) {
   'use strict';
 
@@ -84,18 +84,18 @@ var _ = exports._ = window._;
 },{}],5:[function(require,module,exports){
 'use strict';
 
-var _libraries = require('././libraries.js');
+var _libraries = require('./libraries');
 
-require('././switch.js');
+require('./switch');
 
 _libraries.angular.module('language-select', ['language-select.switch']);
 
-},{"././libraries.js":4,"././switch.js":8}],6:[function(require,module,exports){
+},{"./libraries":4,"./switch":8}],6:[function(require,module,exports){
 'use strict';
 
-var _libraries = require('././libraries.js');
+var _libraries = require('./libraries');
 
-require('././storage.js');
+require('./storage');
 
 // This module provides a directive which shows the currently selected language
 //  and allows the selected language to be chnaged.
@@ -119,12 +119,12 @@ _module.directive('languageSelector', ['languageStorage', '$window', function (l
     };
 }]);
 
-},{"././libraries.js":4,"././storage.js":7}],7:[function(require,module,exports){
+},{"./libraries":4,"./storage":7}],7:[function(require,module,exports){
 'use strict';
 
-var _libraries = require('././libraries.js');
+var _libraries = require('./libraries');
 
-require('././config.js');
+require('./config');
 
 // Module which is responsible for working out which language should be used by the app,
 //  and storing this between page refreshes
@@ -189,12 +189,12 @@ _module.factory('languageStorage', ['$rootScope', '$cookies', '$window', 'langua
     return publicMethods;
 }]);
 
-},{"././config.js":1,"././libraries.js":4}],8:[function(require,module,exports){
+},{"./config":1,"./libraries":4}],8:[function(require,module,exports){
 'use strict';
 
-var _libraries = require('././libraries.js');
+var _libraries = require('./libraries');
 
-require('././selector.js');
+require('./selector');
 
 // This module provides a directive which includes the language select
 //   and provides the entry point for the language switch functionality.
@@ -208,4 +208,4 @@ _module.directive('languageSwitch', [function () {
     };
 }]);
 
-},{"././libraries.js":4,"././selector.js":6}]},{},[1,2,3,4,5,6,7,8]);
+},{"./libraries":4,"./selector":6}]},{},[1,2,3,4,5,6,7,8]);

@@ -1,8 +1,8 @@
 'use strict';
 
-var _libraries = require('././libraries.js');
+var _libraries = require('./libraries');
 
-require('././config.js');
+require('./config');
 
 // Module which is responsible for working out which language should be used by the app,
 //  and storing this between page refreshes

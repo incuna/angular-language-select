@@ -1,8 +1,8 @@
 'use strict';
 
-var _libraries = require('././libraries.js');
+var _libraries = require('./libraries');
 
-require('././storage.js');
+require('./storage');
 
 // This module provides a directive which shows the currently selected language
 //  and allows the selected language to be chnaged.

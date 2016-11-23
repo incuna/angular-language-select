@@ -1,8 +1,8 @@
 'use strict';
 
-var _libraries = require('././libraries.js');
+var _libraries = require('./libraries');
 
-require('././storage.js');
+require('./storage');
 
 // Module registers an http interceptor which adds the http header
 //  for the currently selected language to every API request
