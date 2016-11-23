@@ -181,8 +181,7 @@ module.exports = function (grunt) {
             'eslint',
             'jscs',
             'clean',
-            'build',
-            'karma:ci'
+            'build'
         ]);
     });
 
