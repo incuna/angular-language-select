@@ -143,12 +143,15 @@ module.exports = function (grunt) {
                 }
             }
         },
-        ngtemplates: ngTemplatesPaths.generate('', 'app', '<%= config.compiledScriptsDir %>')
+        ngtemplates: ngTemplatesPaths.generate('', 'app', '<%= config.compiledScriptsDir %>'),
+        karma: {
+            all: {
+                configFile: 'tests/karma.conf.js'
+            }
+        }
     });
 
     // - - - T A S K S - - -
-
-    grunt.loadTasks('./grunt');
 
     grunt.registerTask('default', 'dev');
 
@@ -181,7 +184,8 @@ module.exports = function (grunt) {
             'eslint',
             'jscs',
             'clean',
-            'build'
+            'build',
+            'karma:ci'
         ]);
     });
 
