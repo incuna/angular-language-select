@@ -1,6 +1,6 @@
-import { angular } from './libraries.es';
+import { angular } from './libraries';
 
-import './selector.es';
+import './selector';
 
 // This module provides a directive which includes the language select
 //   and provides the entry point for the language switch functionality.

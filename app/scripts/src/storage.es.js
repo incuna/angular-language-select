@@ -1,6 +1,6 @@
-import { angular } from './libraries.es';
+import { angular } from './libraries';
 
-import './config.es';
+import './config';
 
 // Module which is responsible for working out which language should be used by the app,
 //  and storing this between page refreshes

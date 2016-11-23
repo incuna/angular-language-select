@@ -1,6 +1,6 @@
-import { angular } from './libraries.es';
+import { angular } from './libraries';
 
-import './storage.es';
+import './storage';
 
 // This module provides a directive which shows the currently selected language
 //  and allows the selected language to be chnaged.

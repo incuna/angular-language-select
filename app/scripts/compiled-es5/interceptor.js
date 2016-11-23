@@ -1,6 +1,6 @@
 'use strict';
 
-var _libraries = require('./libraries.js');
+var _libraries = require('././libraries.js');
 
 require('././storage.js');
 
@@ -9,7 +9,6 @@ require('././storage.js');
 
 var _module = _libraries.angular.module('language-select.language-interceptor', ['language-select.storage-service']);
 
-// Factory which actually provides the code to modify headers
 _module.factory('languageInterceptor', ['languageStorage', function (languageStorage) {
 
     var languageInterceptor = {

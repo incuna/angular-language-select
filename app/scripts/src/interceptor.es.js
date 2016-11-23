@@ -1,6 +1,6 @@
-import { angular } from './libraries.es';
+import { angular } from './libraries';
 
-import './storage.es';
+import './storage';
 
 // Module registers an http interceptor which adds the http header
 //  for the currently selected language to every API request

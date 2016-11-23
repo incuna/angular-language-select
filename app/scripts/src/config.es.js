@@ -1,4 +1,4 @@
-import { angular } from './libraries.es';
+import { angular } from './libraries';
 
 const module = angular.module('language-select.config', []);
 

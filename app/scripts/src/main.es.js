@@ -1,6 +1,6 @@
-import { angular } from './libraries.es';
+import { angular } from './libraries';
 
-import './switch.es';
+import './switch';
 
 angular.module('language-select', [
     'language-select.switch'
