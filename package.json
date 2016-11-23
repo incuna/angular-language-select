@@ -42,5 +42,8 @@
     "grunt-jscs": "^3.0.1",
     "grunt-swig-templates": "^0.1.4",
     "jit-grunt": "^0.10.0"
+  },
+  "scripts": {
+      "test": "grunt test"
   }
 }
