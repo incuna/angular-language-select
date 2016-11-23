@@ -23,9 +23,7 @@ module.factory('languageStorage', [
 
         const languageChoices = languageSelectConfig.availableLanguages();
 
-        const normalisedLanguageChoices = _.keyBy(languageChoices, function (choices) {
-            return normaliseLanguageCode(choices.id);
-        });
+        const normalisedLanguageChoices = _.keyBy(languageChoices, (choice) => normaliseLanguageCode(choice.id));
 
         let selectedLanguage;
 
