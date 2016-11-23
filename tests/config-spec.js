@@ -2,18 +2,18 @@ import '../app/scripts/src/main';
 
 describe('languageSelectConfig', function () {
 
-    describe('by default', function () {
-        
-        beforeEach(function () {
-            angular.mock.module('language-select', (languageSelectConfigProvider) => {
-                this.languageSelectConfigProvider = languageSelectConfigProvider;
-            });
-            
-            inject(function (languageSelectConfig) {
-                this.languageSelectConfig = languageSelectConfig;
-            });
+    beforeEach(function () {
+        angular.mock.module('language-select', (languageSelectConfigProvider) => {
+            this.languageSelectConfigProvider = languageSelectConfigProvider;
         });
 
+        inject(function (languageSelectConfig) {
+            this.languageSelectConfig = languageSelectConfig;
+        });
+    });
+
+    describe('by default', function () {
+        
         it('should have english language set', function () {
             expect(this.languageSelectConfig.defaultLanguage()).toBe('en');
         });
@@ -21,18 +21,6 @@ describe('languageSelectConfig', function () {
     });
 
     describe('configuration', function () {
-
-        beforeEach(function () {
-
-            angular.mock.module('language-select', (languageSelectConfigProvider) => {
-                this.languageSelectConfigProvider = languageSelectConfigProvider;
-            });
-
-            inject(function (languageSelectConfig) {
-                this.languageSelectConfig = languageSelectConfig;
-            });
-
-        });
 
         it('should allow to change the language list', function () {
             const languageList = ['language1', 'language2'];

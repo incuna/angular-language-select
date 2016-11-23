@@ -9,23 +9,31 @@ var module = angular.module('language-select.selector', [
     'language-select.storage-service'
 ]);
 
-module.directive('languageSelector', [
+module.controller('languageSelectorController', [
     'languageStorage',
     '$window',
-    function (languageStorage, $window) {
+    function (
+        languageStorage,
+        $window
+    ) {
+        this.selectedLanguage = languageStorage.get();
+        this.languageChoices = languageStorage.getLanguageChoices();
+
+        this.changeLanguage = () => {
+            languageStorage.set(this.selectedLanguage);
+            console.log($window.location.reload);
+            //$window.location.reload();
+        };
+    }
+]);
+
+module.directive('languageSelector', [
+    function () {
         return {
             restrict: 'A',
             templateUrl: 'templates/language-select/language-options.html',
             scope: {},
-            link: function (scope) {
-                scope.selectedLanguage = languageStorage.get();
-                scope.languageChoices = languageStorage.getLanguageChoices();
-
-                scope.changeLanguage = function () {
-                    languageStorage.set(scope.selectedLanguage);
-                    $window.location.reload();
-                };
-            }
+            controller: 'languageSelectorController'
         };
     }
 ]);
