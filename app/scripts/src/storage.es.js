@@ -45,19 +45,19 @@ module.factory('languageStorage', [
             }
         };
 
-        const checkLanguage = function (language) {
-            if (angular.isDefined(language)) {
-                choice = publicMethods.getLanguageChoice(language);
+        const getLanguageChoiceIfValid = function (languageId) {
+            if (angular.isDefined(languageId)) {
+                const choice = publicMethods.getLanguageChoice(languageId);
                 return choice && choice.id;
             }
         };
 
         const determineStartingLanguage = function () {
-            const cookieLanguage = $cookies.get('selectedLanguageId');
-            const browserLanguage = $window.navigator.language || $window.navigator.userLanguage;
+            const cookieLanguageId = $cookies.get('selectedLanguageId');
+            const browserLanguageId = $window.navigator.language || $window.navigator.userLanguage;
 
-            const cookieLangaugeChoice = checkLanguage(cookieLanguage);
-            const browserLanguageChoice = checkLanguage(browserLanguage);
+            const cookieLangaugeChoice = getLanguageChoiceIfValid(cookieLanguageId);
+            const browserLanguageChoice = getLanguageChoiceIfValid(browserLanguageId);
             const defaultLanguage = languageSelectConfig.defaultLanguage();
 
             return cookieLangaugeChoice || browserLanguageChoice || defaultLanguage;
