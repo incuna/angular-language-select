@@ -16,9 +16,11 @@ module.factory('languageStorage', [
     '$window',
     'languageSelectConfig',
     function ($rootScope, $cookies, $window, languageSelectConfig) {
+        const cookieSignature = 'selectedLanguage';
+        const eventSignature = 'language-select:change';
 
         const normaliseLanguageCode = function (languageCode) {
-            return languageCode.toLowerCase().replace(/-/g, '_');
+            return languageCode && languageCode.toLowerCase().replace(/-/g, '_');
         };
 
         const languageChoices = languageSelectConfig.availableLanguages();
@@ -40,8 +42,14 @@ module.factory('languageStorage', [
             },
             set: function (languageId) {
                 selectedLanguage = languageId;
-                $cookies.put('selectedLanguage', selectedLanguage);
-                $rootScope.$broadcast('language-select:change', selectedLanguage);
+                $cookies.put(cookieSignature, selectedLanguage);
+                $rootScope.$broadcast(eventSignature, selectedLanguage);
+            },
+            getCookieSingature: function () {
+                return cookieSignature;
+            },
+            getEventSignature: function () {
+                return eventSignature;
             }
         };
 
@@ -53,17 +61,19 @@ module.factory('languageStorage', [
         };
 
         const determineStartingLanguage = function () {
-            const cookieLanguage = $cookies.get('selectedLanguage');
+            const cookieLanguage = $cookies.get(cookieSignature);
             const browserLanguage = $window.navigator.language || $window.navigator.userLanguage;
+            console.log(browserLanguage);
 
             const cookieLangaugeChoice = checkLanguage(cookieLanguage);
             const browserLanguageChoice = checkLanguage(browserLanguage);
-            const defaultLanguage = languageSelectConfig.defaultLanguage();
+            //const defaultLanguage = languageSelectConfig.defaultLanguage();
 
-            return cookieLangaugeChoice || browserLanguageChoice || defaultLanguage;
+            return cookieLangaugeChoice || browserLanguageChoice //|| defaultLanguage;
         };
 
         const startingLanguage = determineStartingLanguage();
+        console.log(startingLanguage);
         publicMethods.set(startingLanguage);
 
         return publicMethods;
