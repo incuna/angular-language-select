@@ -1,8 +1,8 @@
 'use strict';
 
-var _libraries = require('./libraries.js');
+var _libraries = require('./libraries');
 
-require('././storage.js');
+require('./storage');
 
 // This module provides a directive which shows the currently selected language
 //  and allows the selected language to be chnaged.
@@ -15,13 +15,9 @@ _module.directive('languageSelector', ['languageStorage', '$window', function (l
         templateUrl: 'templates/language-select/language-options.html',
         scope: {},
         link: function link(scope) {
-            // Make languages and current language available to template scope
             scope.selectedLanguage = languageStorage.get();
             scope.languageChoices = languageStorage.getLanguageChoices();
 
-            // Call this in template when changing language
-            //  @param language {object} a single language object as
-            //  returned by getLanguageChoices()
             scope.changeLanguage = function () {
                 languageStorage.set(scope.selectedLanguage);
                 $window.location.reload();

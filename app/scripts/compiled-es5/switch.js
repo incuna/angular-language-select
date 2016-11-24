@@ -1,6 +1,8 @@
 'use strict';
 
-var _libraries = require('./libraries.js');
+var _libraries = require('./libraries');
+
+require('./selector');
 
 // This module provides a directive which includes the language select
 //   and provides the entry point for the language switch functionality.

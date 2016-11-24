@@ -1,20 +1,19 @@
-import { angular } from 'libraries';
+import { angular } from './libraries';
 
 import './storage';
 
 // Module registers an http interceptor which adds the http header
 //  for the currently selected language to every API request
 
-var module = angular.module('language-select.language-interceptor', [
+const module = angular.module('language-select.language-interceptor', [
     'language-select.storage-service'
 ]);
 
-// Factory which actually provides the code to modify headers
 module.factory('languageInterceptor', [
     'languageStorage',
     function (languageStorage) {
 
-        var languageInterceptor = {
+        const languageInterceptor = {
             request: function (config) {
                 // Do this on every http request
                 config.headers['Accept-Language'] = languageStorage.get();

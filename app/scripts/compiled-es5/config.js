@@ -1,8 +1,6 @@
 'use strict';
 
-var _libraries = require('./libraries.js');
-
-// Module for providing configuration options
+var _libraries = require('./libraries');
 
 var _module = _libraries.angular.module('language-select.config', []);
 

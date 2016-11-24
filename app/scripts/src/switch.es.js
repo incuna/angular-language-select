@@ -1,9 +1,11 @@
-import { angular } from 'libraries';
+import { angular } from './libraries';
+
+import './selector';
 
 // This module provides a directive which includes the language select
 //   and provides the entry point for the language switch functionality.
 
-var module = angular.module('language-select.switch', []);
+const module = angular.module('language-select.switch', []);
 
 module.directive('languageSwitch', [
     function () {

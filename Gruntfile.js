@@ -81,8 +81,7 @@ module.exports = function (grunt) {
         babel: {
             all: {
                 options: {
-                    presets: ['es2015'],
-                    resolveModuleSource: (source) => `./${source}.js`
+                    presets: ['es2015']
                 },
                 files: [{
                     expand: true,
