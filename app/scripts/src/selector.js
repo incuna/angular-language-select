@@ -21,8 +21,7 @@ module.controller('languageSelectorController', [
 
         this.changeLanguage = () => {
             languageStorage.set(this.selectedLanguage);
-            console.log($window.location.reload);
-            //$window.location.reload();
+            $window.location.reload();
         };
     }
 ]);
