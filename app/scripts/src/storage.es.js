@@ -25,23 +25,23 @@ module.factory('languageStorage', [
 
         const normalisedLanguageChoices = _.keyBy(languageChoices, (choice) => normaliseLanguageCode(choice.id));
 
-        let selectedLanguage;
+        let selectedLanguageId;
 
         const publicMethods = {
             getLanguageChoices: function () {
                 return languageChoices;
             },
-            getLanguageChoice: function (languageId = selectedLanguage) {
+            getLanguageChoice: function (languageId = selectedLanguageId) {
                 const languageCode = normaliseLanguageCode(languageId);
                 return normalisedLanguageChoices[languageCode];
             },
             get: function () {
-                return selectedLanguage;
+                return selectedLanguageId;
             },
             set: function (languageId) {
-                selectedLanguage = languageId;
-                $cookies.put('selectedLanguage', selectedLanguage);
-                $rootScope.$broadcast('language-select:change', selectedLanguage);
+                selectedLanguageId = languageId;
+                $cookies.put('selectedLanguageId', selectedLanguageId);
+                $rootScope.$broadcast('language-select:change', selectedLanguageId);
             }
         };
 
@@ -53,7 +53,7 @@ module.factory('languageStorage', [
         };
 
         const determineStartingLanguage = function () {
-            const cookieLanguage = $cookies.get('selectedLanguage');
+            const cookieLanguage = $cookies.get('selectedLanguageId');
             const browserLanguage = $window.navigator.language || $window.navigator.userLanguage;
 
             const cookieLangaugeChoice = checkLanguage(cookieLanguage);
