@@ -1,11 +1,11 @@
 import '../app/scripts/src/main';
 
 describe('languageStorage factory', function () {
-    
+
     beforeAll(function () {
-        
+
         this.setupModule = function () {
-            
+
             angular.mock.module('language-select', ($provide) => {
                 $provide.service('languageSelectConfig', () => {
                     return {
@@ -15,7 +15,7 @@ describe('languageStorage factory', function () {
                 });
             });
 
-                
+
             inject(function (languageStorage, languageSelectConfig, $cookies, $rootScope) {
                 this.languageStorage = languageStorage;
                 this.languageSelectConfig = languageSelectConfig;
@@ -23,7 +23,7 @@ describe('languageStorage factory', function () {
                 this.$rootScope = $rootScope;
             });
         };
-        
+
     });
 
     describe('methods', function () {
@@ -55,7 +55,7 @@ describe('languageStorage factory', function () {
                 const choices = this.languageStorage.getLanguageChoices();
                 expect(choices).toBe(this.languageChoices);
             });
-            
+
         });
 
         describe('getLanguageChoice method', function () {
@@ -72,7 +72,7 @@ describe('languageStorage factory', function () {
                 this.languageStorage.set('pl');
                 expect(this.languageStorage.getLanguageChoice()).toBe(this.languageChoices[1]);
             });
-            
+
         });
 
         describe('get method', function () {
@@ -82,11 +82,11 @@ describe('languageStorage factory', function () {
                 this.languageStorage.set('se');
                 expect(this.languageStorage.get()).toBe('se');
             });
-            
+
         });
 
         describe('set method', function () {
-            
+
             it('should set the cookie', function () {
                 expect(this.$cookies.get(this.languageStorage.getCookieSingature())).not.toBe('de');
                 this.languageStorage.set('de');
@@ -107,7 +107,7 @@ describe('languageStorage factory', function () {
 
         beforeEach(function () {
             document.cookie = 'selectedLanguage=pl';
-                
+
             this.languageChoices = [
                 {
                     id: 'en_gb',
@@ -125,7 +125,7 @@ describe('languageStorage factory', function () {
 
             this.setupModule();
         });
-        
+
         it('should set the default language from the cookie', function () {
             expect(this.languageStorage.get()).toBe('pl');
         });
@@ -136,7 +136,7 @@ describe('languageStorage factory', function () {
 
         beforeEach(function () {
             document.cookie = 'selectedLanguage=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
-            
+
             this.languageChoices = [
                 {
                     id: 'en_us',
@@ -157,10 +157,10 @@ describe('languageStorage factory', function () {
     });
 
     describe('when no languages match the available languages', function () {
-        
+
         beforeEach(function () {
             document.cookie = 'selectedLanguage=pl';
-            
+
             this.languageChoices = [
                 {
                     id: 'se',

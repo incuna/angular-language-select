@@ -13,7 +13,7 @@ describe('languageSelectConfig', function () {
     });
 
     describe('by default', function () {
-        
+
         it('should have english language set', function () {
             expect(this.languageSelectConfig.defaultLanguageId()).toBe('en');
         });
@@ -35,7 +35,7 @@ describe('languageSelectConfig', function () {
 
             expect(this.languageSelectConfig.defaultLanguageId()).toBe(defaultLanguageId);
         });
-        
+
     });
-    
+
 });
