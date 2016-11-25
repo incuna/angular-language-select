@@ -63,19 +63,18 @@ module.factory('languageStorage', [
         const determineStartingLanguage = function () {
             const cookieLanguage = $cookies.get(cookieSignature);
             const browserLanguage = $window.navigator.language || $window.navigator.userLanguage;
-            console.log(browserLanguage);
 
             const cookieLangaugeChoice = checkLanguage(cookieLanguage);
             const browserLanguageChoice = checkLanguage(browserLanguage);
-            //const defaultLanguage = languageSelectConfig.defaultLanguage();
+            const defaultLanguage = languageSelectConfig.defaultLanguage();
 
-            return cookieLangaugeChoice || browserLanguageChoice //|| defaultLanguage;
+            return cookieLangaugeChoice || browserLanguageChoice || defaultLanguage;
         };
 
         const startingLanguage = determineStartingLanguage();
-        console.log(startingLanguage);
         publicMethods.set(startingLanguage);
 
         return publicMethods;
     }
 ]);
+
