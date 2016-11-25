@@ -93,6 +93,9 @@ module.exports = function (grunt) {
             }
         },
         eslint: {
+            options: {
+                fix: grunt.option('fix-eslint')
+            },
             node: {
                 options: {
                     configFile: '.eslintrc.node'
