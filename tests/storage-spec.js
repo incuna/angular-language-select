@@ -10,7 +10,7 @@ describe('languageStorage factory', function () {
                 $provide.service('languageSelectConfig', () => {
                     return {
                         availableLanguages: () => this.languageChoices,
-                        defaultLanguage: () => 'se'
+                        defaultLanguageId: () => 'se'
                     }
                 });
             });

@@ -15,7 +15,7 @@ describe('languageSelectConfig', function () {
     describe('by default', function () {
         
         it('should have english language set', function () {
-            expect(this.languageSelectConfig.defaultLanguage()).toBe('en');
+            expect(this.languageSelectConfig.defaultLanguageId()).toBe('en');
         });
 
     });
@@ -30,10 +30,10 @@ describe('languageSelectConfig', function () {
         });
 
         it('should allow to change the default language', function () {
-            const defaultLanguage = 'pl';
-            this.languageSelectConfigProvider.setDefaultLanguage(defaultLanguage);
+            const defaultLanguageId = 'pl';
+            this.languageSelectConfigProvider.setDefaultLanguage(defaultLanguageId);
 
-            expect(this.languageSelectConfig.defaultLanguage()).toBe(defaultLanguage);
+            expect(this.languageSelectConfig.defaultLanguageId()).toBe(defaultLanguageId);
         });
         
     });

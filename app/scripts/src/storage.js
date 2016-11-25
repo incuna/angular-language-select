@@ -27,23 +27,23 @@ module.factory('languageStorage', [
 
         const normalisedLanguageChoices = _.keyBy(languageChoices, (choice) => normaliseLanguageCode(choice.id));
 
-        let selectedLanguage;
+        let selectedLanguageId;
 
         const publicMethods = {
             getLanguageChoices: function () {
                 return languageChoices;
             },
-            getLanguageChoice: function (languageId = selectedLanguage) {
-                const languageCode = normaliseLanguageCode(languageId);
-                return normalisedLanguageChoices[languageCode];
+            getLanguageChoice: function (languageId = selectedLanguageId) {
+                const normalisedLanguageId = normaliseLanguageCode(languageId);
+                return normalisedLanguageChoices[normalisedLanguageId];
             },
             get: function () {
-                return selectedLanguage;
+                return selectedLanguageId;
             },
             set: function (languageId) {
-                selectedLanguage = languageId;
-                $cookies.put(cookieSignature, selectedLanguage);
-                $rootScope.$broadcast(eventSignature, selectedLanguage);
+                selectedLanguageId = languageId;
+                $cookies.put(cookieSignature, selectedLanguageId);
+                $rootScope.$broadcast(eventSignature, selectedLanguageId);
             },
             getCookieSingature: function () {
                 return cookieSignature;
@@ -53,26 +53,26 @@ module.factory('languageStorage', [
             }
         };
 
-        const checkLanguage = function (language) {
-            if (angular.isDefined(language)) {
-                const choice = publicMethods.getLanguageChoice(language);
-                return choice && choice.id;
+        const getLanguageIdIfValid = function (languageId) {
+            if (angular.isDefined(languageId)) {
+                const languageChoice = publicMethods.getLanguageChoice(languageId);
+                return languageChoice && languageChoice.id;
             }
         };
 
-        const determineStartingLanguage = function () {
-            const cookieLanguage = $cookies.get(cookieSignature);
-            const browserLanguage = $window.navigator.language || $window.navigator.userLanguage;
+        const determineStartingLanguageId = function () {
+            const rawCookieLanguageId = $cookies.get(cookieSignature);
+            const rawBrowserLanguageId = $window.navigator.language || $window.navigator.userLanguage;
 
-            const cookieLangaugeChoice = checkLanguage(cookieLanguage);
-            const browserLanguageChoice = checkLanguage(browserLanguage);
-            const defaultLanguage = languageSelectConfig.defaultLanguage();
+            const cookieLangaugeId = getLanguageIdIfValid(rawCookieLanguageId);
+            const browserLanguageId = getLanguageIdIfValid(rawBrowserLanguageId);
+            const defaultLanguageId = languageSelectConfig.defaultLanguageId();
 
-            return cookieLangaugeChoice || browserLanguageChoice || defaultLanguage;
+            return cookieLangaugeId || browserLanguageId || defaultLanguageId;
         };
 
-        const startingLanguage = determineStartingLanguage();
-        publicMethods.set(startingLanguage);
+        const startingLanguageId = determineStartingLanguageId();
+        publicMethods.set(startingLanguageId);
 
         return publicMethods;
     }
