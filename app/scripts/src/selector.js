@@ -32,7 +32,8 @@ module.directive('languageSelector', [
             restrict: 'A',
             templateUrl: 'templates/language-select/language-options.html',
             scope: {},
-            controller: 'languageSelectorController'
+            controller: 'languageSelectorController',
+            controllerAs: 'selector'
         };
     }
 ]);
