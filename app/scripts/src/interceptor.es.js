@@ -6,7 +6,7 @@ import './storage';
 //  for the currently selected language to every API request
 
 const module = angular.module('language-select.language-interceptor', [
-    'language-select.storage-service'
+    'language-select.storage-service',
 ]);
 
 module.factory('languageInterceptor', [
@@ -18,9 +18,9 @@ module.factory('languageInterceptor', [
                 // Do this on every http request
                 config.headers['Accept-Language'] = languageStorage.get();
                 return config;
-            }
+            },
         };
 
         return languageInterceptor;
-    }
+    },
 ]);
