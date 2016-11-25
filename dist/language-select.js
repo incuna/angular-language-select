@@ -143,41 +143,41 @@ _module.factory('languageStorage', ['$rootScope', '$cookies', '$window', 'langua
         return normaliseLanguageCode(choice.id);
     });
 
-    var selectedLanguage = void 0;
+    var selectedLanguageId = void 0;
 
     var publicMethods = {
         getLanguageChoices: function getLanguageChoices() {
             return languageChoices;
         },
         getLanguageChoice: function getLanguageChoice() {
-            var languageId = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : selectedLanguage;
+            var languageId = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : selectedLanguageId;
 
             var languageCode = normaliseLanguageCode(languageId);
             return normalisedLanguageChoices[languageCode];
         },
         get: function get() {
-            return selectedLanguage;
+            return selectedLanguageId;
         },
         set: function set(languageId) {
-            selectedLanguage = languageId;
-            $cookies.put('selectedLanguage', selectedLanguage);
-            $rootScope.$broadcast('language-select:change', selectedLanguage);
+            selectedLanguageId = languageId;
+            $cookies.put('selectedLanguageId', selectedLanguageId);
+            $rootScope.$broadcast('language-select:change', selectedLanguageId);
         }
     };
 
-    var checkLanguage = function checkLanguage(language) {
-        if (_libraries.angular.isDefined(language)) {
-            choice = publicMethods.getLanguageChoice(language);
+    var getLanguageChoiceIfValid = function getLanguageChoiceIfValid(languageId) {
+        if (_libraries.angular.isDefined(languageId)) {
+            var choice = publicMethods.getLanguageChoice(languageId);
             return choice && choice.id;
         }
     };
 
     var determineStartingLanguage = function determineStartingLanguage() {
-        var cookieLanguage = $cookies.get('selectedLanguage');
-        var browserLanguage = $window.navigator.language || $window.navigator.userLanguage;
+        var cookieLanguageId = $cookies.get('selectedLanguageId');
+        var browserLanguageId = $window.navigator.language || $window.navigator.userLanguage;
 
-        var cookieLangaugeChoice = checkLanguage(cookieLanguage);
-        var browserLanguageChoice = checkLanguage(browserLanguage);
+        var cookieLangaugeChoice = getLanguageChoiceIfValid(cookieLanguageId);
+        var browserLanguageChoice = getLanguageChoiceIfValid(browserLanguageId);
         var defaultLanguage = languageSelectConfig.defaultLanguage();
 
         return cookieLangaugeChoice || browserLanguageChoice || defaultLanguage;
