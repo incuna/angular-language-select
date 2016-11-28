@@ -1,3 +1,4 @@
+/*eslint object-curly-newline: ["error", "always"]*/
 /* global module, require */
 
 'use strict';
@@ -67,14 +68,28 @@ module.exports = function (grunt) {
                 ],
             },
             ngtemplates: {
-                files: ['<%= config.templates.generatedFiles %>'],
-                tasks: ['ngtemplates'],
+                files: [
+                    '<%= config.templates.generatedFiles %>',
+                ],
+                tasks: [
+                    'ngtemplates',
+                ],
             },
         },
-        browserify: {all: {files: {'<%= config.distDir %>/language-select.js': '<%= config.compiledScriptsDir %>/**/*.js'} } },
+        browserify: {
+            all: {
+                files: {
+                    '<%= config.distDir %>/language-select.js': '<%= config.compiledScriptsDir %>/**/*.js',
+                },
+            },
+        },
         babel: {
             all: {
-                options: {presets: ['es2015']},
+                options: {
+                    presets: [
+                        'es2015',
+                    ],
+                },
                 files: [{
                     expand: true,
                     cwd: '<%= config.srcScriptsDir %>',
@@ -85,21 +100,35 @@ module.exports = function (grunt) {
             },
         },
         eslint: {
-            options: {fix: grunt.option('fix-eslint')},
+            options: {
+                fix: grunt.option('fix-eslint'),
+            },
             node: {
-                options: {configFile: '.eslintrc.node'},
+                options: {
+                    configFile: '.eslintrc.node',
+                },
                 src: '<%= config.lintFiles.node %>',
             },
             es: {
-                options: {configFile: '.eslintrc.es'},
+                options: {
+                    configFile: '.eslintrc.es',
+                },
                 src: '<%= config.lintFiles.es %>',
             },
             tests: {
-                options: {configFile: '.eslintrc.es'},
+                options: {
+                    configFile: '.eslintrc.es',
+                },
                 src: '<%= config.lintFiles.tests %>',
             },
         },
-        jscs: {all: {files: ['<%= config.lintFiles %>']} },
+        jscs: {
+            all: {
+                files: [
+                    '<%= config.lintFiles %>',
+                ],
+            },
+        },
         swig: {
             all: {
                 expand: true,
@@ -119,12 +148,25 @@ module.exports = function (grunt) {
                 '<%= config.templates.generatedDir %>/*',
             ],
         },
-        uglify: {dist: {files: {'<%= config.distDir %>/language-select.min.js': '<%= config.distDir %>/language-select.js'} } },
+        uglify: {
+            dist: {
+                files: {
+                    '<%= config.distDir %>/language-select.min.js': '<%= config.distDir %>/language-select.js',
+                },
+            },
+        },
         ngtemplates: ngTemplatesPaths.generate('', 'app', '<%= config.compiledScriptsDir %>'),
         karma: {
-            options: {configFile: 'tests/karma.conf.js'},
-            ci: {},
-            dev: {options: {singleRun: false} },
+            options: {
+                configFile: 'tests/karma.conf.js',
+            },
+            ci: {
+            },
+            dev: {
+                options: {
+                    singleRun: false,
+                },
+            },
         },
     });
 
