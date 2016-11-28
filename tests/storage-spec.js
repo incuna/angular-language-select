@@ -5,14 +5,14 @@ describe('languageStorage factory', function () {
     beforeAll(function () {
 
         this.setupModule = function () {
+            this.mockLanguageId = 'se';
 
-            angular.mock.module('language-select', ($provide) => {
-                $provide.service('languageSelectConfig', () => {
-                    return {
-                        availableLanguages: () => this.languageChoices,
-                        defaultLanguageId: () => 'se',
-                    };
-                });
+            angular.mock.module('language-select');
+            angular.mock.module({
+                languageSelectConfig: {
+                    availableLanguages: () => this.languageChoices,
+                    defaultLanguageId: () => this.mockLanguageId,
+                },
             });
 
             inject(function (languageStorage, languageSelectConfig, $cookies, $rootScope) {
