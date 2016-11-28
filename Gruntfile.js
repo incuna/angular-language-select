@@ -188,7 +188,6 @@ module.exports = function (grunt) {
             'jscs',
             'clean',
             'build',
-            'karma:ci',
         ]);
     });
 
