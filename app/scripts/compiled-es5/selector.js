@@ -9,19 +9,24 @@ require('./storage');
 
 var _module = _libraries.angular.module('language-select.selector', ['language-select.storage-service']);
 
-_module.directive('languageSelector', ['languageStorage', '$window', function (languageStorage, $window) {
+_module.controller('languageSelectorController', ['languageStorage', '$window', function (languageStorage, $window) {
+    var _this = this;
+
+    this.selectedLanguage = languageStorage.get();
+    this.languageChoices = languageStorage.getLanguageChoices();
+
+    this.changeLanguage = function () {
+        languageStorage.set(_this.selectedLanguage);
+        $window.location.reload();
+    };
+}]);
+
+_module.directive('languageSelector', [function () {
     return {
         restrict: 'A',
         templateUrl: 'templates/language-select/language-options.html',
         scope: {},
-        link: function link(scope) {
-            scope.selectedLanguage = languageStorage.get();
-            scope.languageChoices = languageStorage.getLanguageChoices();
-
-            scope.changeLanguage = function () {
-                languageStorage.set(scope.selectedLanguage);
-                $window.location.reload();
-            };
-        }
+        controller: 'languageSelectorController',
+        controllerAs: 'selector'
     };
 }]);
