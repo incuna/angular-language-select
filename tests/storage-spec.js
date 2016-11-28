@@ -25,6 +25,10 @@ describe('languageStorage factory', function () {
 
     });
 
+    afterEach(function () {
+        document.cookie = 'selectedLanguage=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+    });
+
     describe('methods', function () {
 
         beforeEach(function () {
@@ -77,6 +81,7 @@ describe('languageStorage factory', function () {
         describe('get method', function () {
 
             it('should return the current selected language', function () {
+                this.languageStorage.set('pl');
                 expect(this.languageStorage.get()).not.toBe('se');
                 this.languageStorage.set('se');
                 expect(this.languageStorage.get()).toBe('se');
@@ -134,8 +139,6 @@ describe('languageStorage factory', function () {
     describe('when there is no cookie', function () {
 
         beforeEach(function () {
-            document.cookie = 'selectedLanguage=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
-
             this.languageChoices = [
                 {
                     id: 'en_us',
