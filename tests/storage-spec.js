@@ -173,7 +173,7 @@ describe('languageStorage factory', function () {
             this.setupModule();
         });
 
-        it('should use the browser language', function () {
+        it('should use the default language', function () {
             expect(this.languageStorage.get()).toBe('se');
         });
 
