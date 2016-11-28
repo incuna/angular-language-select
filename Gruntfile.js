@@ -140,18 +140,6 @@ module.exports = function (grunt) {
             },
         },
         ngtemplates: ngTemplatesPaths.generate('', 'app', '<%= config.compiledScriptsDir %>'),
-        karma: {
-            options: {
-                configFile: 'tests/karma.conf.js',
-            },
-            ci: {
-            },
-            dev: {
-                options: {
-                    singleRun: false,
-                },
-            },
-        },
     });
 
     // - - - T A S K S - - -
