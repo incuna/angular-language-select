@@ -2,7 +2,7 @@
   "name": "angular-language-select",
   "version": "0.0.1",
   "description": "Language / locale select",
-  "main": "web/es5/main.js",
+  "main": "app/scripts/compiled-es5/main.js",
   "repository": {
     "type": "git",
     "url": "incuna/angular-language-select.git"
