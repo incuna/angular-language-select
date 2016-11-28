@@ -1,7 +1,4 @@
 {
-    "extends": [
-        ".eslintrc.main"
-    ],
     "env": {
         "browser": true
     },

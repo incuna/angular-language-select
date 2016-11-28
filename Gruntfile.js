@@ -1,4 +1,5 @@
 /*eslint object-curly-newline: ["error", "always"]*/
+/* eslint-env node */
 /* global module, require */
 
 'use strict';
@@ -38,11 +39,11 @@ module.exports = function (grunt) {
                 generatedFiles: '<%= config.templates.generatedDir %>/**/*.html',
             },
 
-            lintFiles: {
-                node: ['Gruntfile.js'],
-                es: ['<%= config.srcScriptsDir %>'],
-                tests: ['<%= config.testsDir %>'],
-            },
+            lintFiles: [
+                'Gruntfile.js',
+                '<%= config.srcScriptsDir %>',
+                '<%= config.testsDir %>',
+            ],
         },
 
     });
@@ -103,23 +104,8 @@ module.exports = function (grunt) {
             options: {
                 fix: grunt.option('fix-eslint'),
             },
-            node: {
-                options: {
-                    configFile: '.eslintrc.node',
-                },
-                src: '<%= config.lintFiles.node %>',
-            },
-            es: {
-                options: {
-                    configFile: '.eslintrc.es',
-                },
-                src: '<%= config.lintFiles.es %>',
-            },
-            tests: {
-                options: {
-                    configFile: '.eslintrc.es',
-                },
-                src: '<%= config.lintFiles.tests %>',
+            all: {
+                src: '<%= config.lintFiles %>',
             },
         },
         jscs: {
