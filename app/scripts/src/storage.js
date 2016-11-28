@@ -1,4 +1,4 @@
-import { angular } from './libraries';
+import { angular, _ } from './libraries';
 
 import './config';
 
@@ -7,7 +7,7 @@ import './config';
 
 const module = angular.module('language-select.storage-service', [
     'ngCookies',
-    'language-select.config'
+    'language-select.config',
 ]);
 
 module.factory('languageStorage', [
@@ -50,7 +50,7 @@ module.factory('languageStorage', [
             },
             getEventSignature: function () {
                 return eventSignature;
-            }
+            },
         };
 
         const getLanguageIdIfValid = function (languageId) {
@@ -75,6 +75,6 @@ module.factory('languageStorage', [
         publicMethods.set(startingLanguageId);
 
         return publicMethods;
-    }
+    },
 ]);
 

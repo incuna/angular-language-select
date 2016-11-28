@@ -1,4 +1,5 @@
-/* eslint-env node */
+'use strict';
+
 module.exports = function (config) {
     config.set({
 
@@ -10,9 +11,11 @@ module.exports = function (config) {
             debug: true,
             transform: [
                 ['babelify', {
-                    presets: ['es2015']
-                }]
-            ]
+                    presets: [
+                        'es2015',
+                    ],
+                }],
+            ],
         },
 
         files: [
@@ -20,12 +23,10 @@ module.exports = function (config) {
             '../node_modules/angular/angular.js',
             '../node_modules/angular-cookies/angular-cookies.js',
             '../node_modules/angular-mocks/angular-mocks.js',
-            '*-spec.js'
+            '*-spec.js',
         ],
 
-        preprocessors: {
-            '*-spec.js': 'browserify'
-        },
+        preprocessors: {'*-spec.js': 'browserify'},
 
         reporters: ['progress', 'dots'],
 
@@ -35,6 +36,6 @@ module.exports = function (config) {
 
         browsers: ['Firefox'],
 
-        singleRun: true
+        singleRun: true,
     });
 };

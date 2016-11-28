@@ -10,11 +10,10 @@ describe('languageStorage factory', function () {
                 $provide.service('languageSelectConfig', () => {
                     return {
                         availableLanguages: () => this.languageChoices,
-                        defaultLanguageId: () => 'se'
-                    }
+                        defaultLanguageId: () => 'se',
+                    };
                 });
             });
-
 
             inject(function (languageStorage, languageSelectConfig, $cookies, $rootScope) {
                 this.languageStorage = languageStorage;
@@ -33,16 +32,16 @@ describe('languageStorage factory', function () {
             this.languageChoices = [
                 {
                     id: 'en_gb',
-                    label: 'English'
+                    label: 'English',
                 },
                 {
                     id: 'pl',
-                    label: 'Polski'
+                    label: 'Polski',
                 },
                 {
                     id: 'se',
-                    label: 'Svensk'
-                }
+                    label: 'Svensk',
+                },
             ];
             this.setupModule();
 
@@ -111,16 +110,16 @@ describe('languageStorage factory', function () {
             this.languageChoices = [
                 {
                     id: 'en_gb',
-                    label: 'English'
+                    label: 'English',
                 },
                 {
                     id: 'pl',
-                    label: 'Polski'
+                    label: 'Polski',
                 },
                 {
                     id: 'se',
-                    label: 'Svensk'
-                }
+                    label: 'Svensk',
+                },
             ];
 
             this.setupModule();
@@ -140,12 +139,12 @@ describe('languageStorage factory', function () {
             this.languageChoices = [
                 {
                     id: 'en_us',
-                    label: 'English'
+                    label: 'English',
                 },
                 {
                     id: 'pl',
-                    label: 'Polski'
-                }
+                    label: 'Polski',
+                },
             ];
             this.setupModule();
         });
@@ -164,8 +163,8 @@ describe('languageStorage factory', function () {
             this.languageChoices = [
                 {
                     id: 'se',
-                    label: 'Svensk'
-                }
+                    label: 'Svensk',
+                },
             ];
 
             this.setupModule();

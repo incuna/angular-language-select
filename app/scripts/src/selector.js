@@ -23,7 +23,7 @@ module.controller('languageSelectorController', [
             languageStorage.set(this.selectedLanguage);
             $window.location.reload();
         };
-    }
+    },
 ]);
 
 module.directive('languageSelector', [
@@ -33,7 +33,7 @@ module.directive('languageSelector', [
             templateUrl: 'templates/language-select/language-options.html',
             scope: {},
             controller: 'languageSelectorController',
-            controllerAs: 'selector'
+            controllerAs: 'selector',
         };
     },
 ]);

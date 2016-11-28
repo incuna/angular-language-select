@@ -15,7 +15,7 @@ describe('languageSelectorController', function () {
 
         this.defaultLanguage = 'en';
         this.choices = [
-            {id: 'en', label: 'English'}
+            {id: 'en', label: 'English'},
         ];
         spyOn(this.languageStorage, 'get').and.returnValue(this.defaultLanguage);
         spyOn(this.languageStorage, 'getLanguageChoices').and.returnValue(this.choices);

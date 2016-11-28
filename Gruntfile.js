@@ -102,7 +102,7 @@ module.exports = function (grunt) {
         },
         eslint: {
             options: {
-                fix: grunt.option('fix-eslint')
+                fix: grunt.option('fix-eslint'),
             },
             all: {
                 src: '<%= config.lintFiles %>',
@@ -142,15 +142,16 @@ module.exports = function (grunt) {
         ngtemplates: ngTemplatesPaths.generate('', 'app', '<%= config.compiledScriptsDir %>'),
         karma: {
             options: {
-                configFile: 'tests/karma.conf.js'
+                configFile: 'tests/conf/karma.conf.js',
             },
-            ci: {},
+            ci: {
+            },
             dev: {
                 options: {
-                    singleRun: false
-                }
-            }
-        }
+                    singleRun: false,
+                },
+            },
+        },
     });
 
     // - - - T A S K S - - -
@@ -187,7 +188,7 @@ module.exports = function (grunt) {
             'jscs',
             'clean',
             'build',
-            'karma:ci'
+            'karma:ci',
         ]);
     });
 
