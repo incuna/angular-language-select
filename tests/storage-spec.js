@@ -52,7 +52,7 @@ describe('languageStorage factory', function () {
 
             it('should return the language choices from the config', function () {
                 const choices = this.languageStorage.getLanguageChoices();
-                expect(choices).toBe(this.languageChoices);
+                expect(choices).toEqual(this.languageChoices);
             });
 
         });

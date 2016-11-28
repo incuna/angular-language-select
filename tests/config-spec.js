@@ -26,14 +26,14 @@ describe('languageSelectConfig', function () {
             const languageList = ['language1', 'language2'];
             this.languageSelectConfigProvider.setAvailableLanguages(languageList);
 
-            expect(this.languageSelectConfig.availableLanguages()).toBe(languageList);
+            expect(this.languageSelectConfig.availableLanguages()).toEqual(languageList);
         });
 
         it('should allow to change the default language', function () {
             const defaultLanguageId = 'pl';
             this.languageSelectConfigProvider.setDefaultLanguage(defaultLanguageId);
 
-            expect(this.languageSelectConfig.defaultLanguageId()).toBe(defaultLanguageId);
+            expect(this.languageSelectConfig.defaultLanguageId()).toEqual(defaultLanguageId);
         });
 
     });
