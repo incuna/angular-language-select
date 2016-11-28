@@ -1,3 +1,5 @@
+/*eslint object-curly-newline: ["error", "always"]*/
+/* eslint-env node */
 /* global module, require */
 
 'use strict';
@@ -11,7 +13,7 @@ module.exports = function (grunt) {
         // Use jit-grunt to only load necessary tasks for each invocation of grunt.
         require('jit-grunt')(grunt, {
             swig: 'grunt-swig-templates',
-            ngtemplates: 'grunt-angular-templates'
+            ngtemplates: 'grunt-angular-templates',
         });
     }
 
@@ -34,15 +36,15 @@ module.exports = function (grunt) {
                 sourceDir: 'templates/twig-source',
                 sourceFiles: '<%= config.templates.sourceDir %>/**/*.html',
                 generatedDir: 'templates/generated',
-                generatedFiles: '<%= config.templates.generatedDir %>/**/*.html'
+                generatedFiles: '<%= config.templates.generatedDir %>/**/*.html',
             },
 
-            lintFiles: {
-                node: ['Gruntfile.js'],
-                es: ['<%= config.srcScriptsDir %>'],
-                tests: ['<%= config.testsDir %>']
-            }
-        }
+            lintFiles: [
+                'Gruntfile.js',
+                '<%= config.srcScriptsDir %>',
+                '<%= config.testsDir %>',
+            ],
+        },
 
     });
 
@@ -51,100 +53,91 @@ module.exports = function (grunt) {
             es: {
                 files: [
                     '<%= config.srcScriptsDir %>/**/*.js',
-                    '<%= config.compiledScriptsDir %>/**/templates.js'
+                    '<%= config.compiledScriptsDir %>/**/templates.js',
                 ],
                 tasks: [
                     'compilejs',
-                    'uglify'
-                ]
+                    'uglify',
+                ],
             },
             swig: {
                 files: [
-                    '<%= config.templates.sourceFiles %>'
+                    '<%= config.templates.sourceFiles %>',
                 ],
                 tasks: [
-                    'orderedSwig'
-                ]
+                    'orderedSwig',
+                ],
             },
             ngtemplates: {
-                files: ['<%= config.templates.generatedFiles %>'],
-                tasks: ['ngtemplates']
-            }
+                files: [
+                    '<%= config.templates.generatedFiles %>',
+                ],
+                tasks: [
+                    'ngtemplates',
+                ],
+            },
         },
         browserify: {
             all: {
                 files: {
-                    '<%= config.distDir %>/language-select.js': '<%= config.compiledScriptsDir %>/**/*.js'
-                }
-            }
+                    '<%= config.distDir %>/language-select.js': '<%= config.compiledScriptsDir %>/**/*.js',
+                },
+            },
         },
         babel: {
             all: {
                 options: {
-                    presets: ['es2015']
+                    presets: [
+                        'es2015',
+                    ],
                 },
                 files: [{
                     expand: true,
                     cwd: '<%= config.srcScriptsDir %>',
                     src: ['**/*.js'],
                     dest: '<%= config.compiledScriptsDir %>',
-                    ext: '.js'
-                }]
-            }
+                    ext: '.js',
+                }],
+            },
         },
         eslint: {
             options: {
                 fix: grunt.option('fix-eslint')
             },
-            node: {
-                options: {
-                    configFile: '.eslintrc.node'
-                },
-                src: '<%= config.lintFiles.node %>'
+            all: {
+                src: '<%= config.lintFiles %>',
             },
-            es: {
-                options: {
-                    configFile: '.eslintrc.es'
-                },
-                src: '<%= config.lintFiles.es %>'
-            },
-            tests: {
-                options: {
-                    configFile: '.eslintrc.es'
-                },
-                src: '<%= config.lintFiles.tests %>'
-            }
         },
         jscs: {
             all: {
-                files: ['<%= config.lintFiles %>']
-            }
+                src: '<%= config.lintFiles %>',
+            },
         },
         swig: {
             all: {
                 expand: true,
                 cwd: '<%= config.templates.sourceDir %>',
                 src: [
-                    '**/*.html'
+                    '**/*.html',
                 ],
-                dest: '<%= config.templates.generatedDir %>'
-            }
+                dest: '<%= config.templates.generatedDir %>',
+            },
         },
         clean: {
             js: [
                 '<%= config.compiledScriptsDir %>',
-                '<%= config.distDir %>'
+                '<%= config.distDir %>',
             ],
             swig: [
-                '<%= config.templates.generatedDir %>/*'
-            ]
+                '<%= config.templates.generatedDir %>/*',
+            ],
         },
         uglify: {
             dist: {
                 files: {
-                    '<%= config.distDir %>/language-select.min.js': '<%= config.distDir %>/language-select.js'
-                }
-            }
+                    '<%= config.distDir %>/language-select.min.js': '<%= config.distDir %>/language-select.js',
+                },
+            },
         },
         ngtemplates: ngTemplatesPaths.generate('', 'app', '<%= config.compiledScriptsDir %>'),
         karma: {
@@ -167,25 +160,25 @@ module.exports = function (grunt) {
     grunt.registerTask('dev', function () {
         grunt.task.run([
             'build',
-            'watch'
+            'watch',
         ]);
     });
 
     grunt.registerTask('compilejs', function () {
         grunt.task.run([
             'babel',
-            'browserify'
+            'browserify',
         ]);
     });
 
     grunt.registerTask('orderedSwig', [
         'clean:swig',
-        'swig:all'
+        'swig:all',
     ]);
 
     grunt.registerTask('compileTemplates', [
         'orderedSwig',
-        'ngtemplates'
+        'ngtemplates',
     ]);
 
     grunt.registerTask('test', function () {
@@ -203,7 +196,7 @@ module.exports = function (grunt) {
             'clean',
             'compileTemplates',
             'compilejs',
-            'uglify'
+            'uglify',
         ];
         grunt.task.run(tasks);
     });
