@@ -2,7 +2,7 @@ angular.module('-language-select.templates', []).run(['$templateCache', function
   'use strict';
 
   $templateCache.put('templates/language-select/language-options.html',
-    "<div class=select-wrapper><select ng-model=selectedLanguage ng-change=changeLanguage() ng-options=\"language.id as language.label for language in languageChoices\"></select></div>"
+    "<div class=select-wrapper><select ng-model=selector.selectedLanguage ng-change=selector.changeLanguage() ng-options=\"language.id as language.label for language in selector.languageChoices\"></select></div>"
   );
 
 
