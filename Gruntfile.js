@@ -110,9 +110,7 @@ module.exports = function (grunt) {
         },
         jscs: {
             all: {
-                files: [
-                    '<%= config.lintFiles %>',
-                ],
+                src: '<%= config.lintFiles %>',
             },
         },
         swig: {
