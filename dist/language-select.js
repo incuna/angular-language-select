@@ -88,9 +88,11 @@ var _libraries = require('./libraries');
 
 require('./switch');
 
+require('./interceptor');
+
 _libraries.angular.module('language-select', ['language-select.switch']);
 
-},{"./libraries":4,"./switch":8}],6:[function(require,module,exports){
+},{"./interceptor":2,"./libraries":4,"./switch":8}],6:[function(require,module,exports){
 'use strict';
 
 var _libraries = require('./libraries');

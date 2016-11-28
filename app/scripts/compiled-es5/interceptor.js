@@ -21,3 +21,7 @@ _module.factory('languageInterceptor', ['languageStorage', function (languageSto
 
     return languageInterceptor;
 }]);
+
+_module.config(['$httpProvider', function ($httpProvider) {
+    $httpProvider.interceptors.push('languageInterceptor');
+}]);
