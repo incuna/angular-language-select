@@ -29,7 +29,6 @@
     "disallowSpacesInCallExpression": true,
     "disallowMultipleVarDecl": true,
     "requireBlocksOnNewline": 1,
-    "requirePaddingNewLinesInObjects": true,
     "disallowEmptyBlocks": true,
 
     "disallowQuotedKeysInObjects": true,
@@ -46,7 +45,6 @@
     "disallowMultipleLineBreaks": true,
     "disallowMixedSpacesAndTabs": true,
     "disallowTrailingWhitespace": true,
-    "disallowTrailingComma": true,
     "disallowKeywordsOnNewLine": ["else"],
     "requireLineFeedAtFileEnd": true,
 

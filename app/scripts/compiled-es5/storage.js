@@ -17,7 +17,7 @@ _module.factory('languageStorage', ['$rootScope', '$cookies', '$window', 'langua
 
     var languageChoices = languageSelectConfig.availableLanguages();
 
-    var normalisedLanguageChoices = _.keyBy(languageChoices, function (choice) {
+    var normalisedLanguageChoices = _libraries._.keyBy(languageChoices, function (choice) {
         return normaliseLanguageCode(choice.id);
     });
 

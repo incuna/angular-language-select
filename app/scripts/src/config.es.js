@@ -6,8 +6,8 @@ module.provider('languageSelectConfig', function () {
     let availableLanguages = [
         {
             id: 'en',
-            label: 'English'
-        }
+            label: 'English',
+        },
     ];
     let defaultLanguage = null;
 
@@ -19,7 +19,7 @@ module.provider('languageSelectConfig', function () {
                 },
                 defaultLanguage: function () {
                     return defaultLanguage || availableLanguages[0].id;
-                }
+                },
             };
         },
         setAvailableLanguages: function (value) {
@@ -27,6 +27,6 @@ module.provider('languageSelectConfig', function () {
         },
         setDefaultLanguage: function (value) {
             defaultLanguage = value;
-        }
-    }
+        },
+    };
 });

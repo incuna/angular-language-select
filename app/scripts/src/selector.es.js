@@ -6,7 +6,7 @@ import './storage';
 //  and allows the selected language to be chnaged.
 
 var module = angular.module('language-select.selector', [
-    'language-select.storage-service'
+    'language-select.storage-service',
 ]);
 
 module.directive('languageSelector', [
@@ -25,7 +25,7 @@ module.directive('languageSelector', [
                     languageStorage.set(scope.selectedLanguage);
                     $window.location.reload();
                 };
-            }
+            },
         };
-    }
+    },
 ]);

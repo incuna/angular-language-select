@@ -1,4 +1,4 @@
-import { angular } from './libraries';
+import { angular, _ } from './libraries';
 
 import './config';
 
@@ -7,7 +7,7 @@ import './config';
 
 const module = angular.module('language-select.storage-service', [
     'ngCookies',
-    'language-select.config'
+    'language-select.config',
 ]);
 
 module.factory('languageStorage', [
@@ -42,7 +42,7 @@ module.factory('languageStorage', [
                 selectedLanguageId = languageId;
                 $cookies.put('selectedLanguageId', selectedLanguageId);
                 $rootScope.$broadcast('language-select:change', selectedLanguageId);
-            }
+            },
         };
 
         const getLanguageChoiceIfValid = function (languageId) {
@@ -67,5 +67,5 @@ module.factory('languageStorage', [
         publicMethods.set(startingLanguage);
 
         return publicMethods;
-    }
+    },
 ]);
