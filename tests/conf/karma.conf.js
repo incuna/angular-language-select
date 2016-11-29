@@ -21,7 +21,11 @@ module.exports = function (config) {
         files: [
             '../node_modules/lodash/lodash.js',
             '../node_modules/angular/angular.js',
+            // For angular 1.2.15
+            '../node_modules/angular/lib/angular.min.js',
             '../node_modules/angular-cookies/angular-cookies.js',
+            // For angular-cookies 1.2.15
+            '../node_modules/angular-cookies/src/angular-cookies.js',
             '../node_modules/angular-mocks/angular-mocks.js',
             '*-spec.js',
         ],

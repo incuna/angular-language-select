@@ -134,7 +134,7 @@ describe('languageStorage factory', function () {
             // This test won't pass in angular < 1.4 due to how $browser (a private service)
             //  is mocked so it doesn't read actual cookies from the document
             const angularVersion = window.__karma__.config.args[0];
-            if (angularVersion === '1.3') {
+            if (angularVersion === '1.2.15' || angularVersion === '1.3') {
                 pending();
             }
             expect(this.languageStorage.get()).toBe('pl');
