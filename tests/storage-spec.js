@@ -5,14 +5,14 @@ describe('languageStorage factory', function () {
     beforeAll(function () {
 
         this.setupModule = function () {
+            this.mockLanguageId = 'se';
 
-            angular.mock.module('language-select', ($provide) => {
-                $provide.service('languageSelectConfig', () => {
-                    return {
-                        availableLanguages: () => this.languageChoices,
-                        defaultLanguageId: () => 'se',
-                    };
-                });
+            angular.mock.module('language-select');
+            angular.mock.module({
+                languageSelectConfig: {
+                    availableLanguages: () => this.languageChoices,
+                    defaultLanguageId: () => this.mockLanguageId,
+                },
             });
 
             inject(function (languageStorage, languageSelectConfig, $cookies, $rootScope) {
@@ -23,6 +23,10 @@ describe('languageStorage factory', function () {
             });
         };
 
+    });
+
+    afterEach(function () {
+        document.cookie = 'selectedLanguage=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
     });
 
     describe('methods', function () {
@@ -52,7 +56,7 @@ describe('languageStorage factory', function () {
 
             it('should return the language choices from the config', function () {
                 const choices = this.languageStorage.getLanguageChoices();
-                expect(choices).toBe(this.languageChoices);
+                expect(choices).toEqual(this.languageChoices);
             });
 
         });
@@ -77,6 +81,7 @@ describe('languageStorage factory', function () {
         describe('get method', function () {
 
             it('should return the current selected language', function () {
+                this.languageStorage.set('pl');
                 expect(this.languageStorage.get()).not.toBe('se');
                 this.languageStorage.set('se');
                 expect(this.languageStorage.get()).toBe('se');
@@ -134,7 +139,8 @@ describe('languageStorage factory', function () {
     describe('when there is no cookie', function () {
 
         beforeEach(function () {
-            document.cookie = 'selectedLanguage=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+            this.originalBrowserLanguage = window.navigator.language;
+            Object.defineProperty(window.navigator, 'language', {value: 'en-US', configurable: true});
 
             this.languageChoices = [
                 {
@@ -149,7 +155,11 @@ describe('languageStorage factory', function () {
             this.setupModule();
         });
 
-        it('should use the browser language', function () {
+        afterEach(function () {
+            Object.defineProperty(window.navigator, 'language', {value: this.originalBrowserLanguage, configurable: true});
+        });
+
+        it('should use the browser language if it is in the choices', function () {
             expect(this.languageStorage.get()).toBe('en_us');
         });
 
@@ -170,7 +180,7 @@ describe('languageStorage factory', function () {
             this.setupModule();
         });
 
-        it('should use the browser language', function () {
+        it('should use the default language', function () {
             expect(this.languageStorage.get()).toBe('se');
         });
 
