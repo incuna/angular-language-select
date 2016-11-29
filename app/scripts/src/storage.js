@@ -15,7 +15,7 @@ module.service('cookieHandler', [
     '$cookies',
     function ($cookies) {
         this.put = function (name, value) {
-            if ($cookies.put) {
+            if (angular.isFunction($cookies.put)) {
                 $cookies.put(name, value);
             } else {
                 $cookies[name] = value;
@@ -23,7 +23,7 @@ module.service('cookieHandler', [
         };
 
         this.get = function (name) {
-            if ($cookies.get) {
+            if (angular.isFunction($cookies.get)) {
                 return $cookies.get(name);
             }
 
