@@ -15,10 +15,10 @@ describe('languageStorage factory', function () {
                 },
             });
 
-            inject(function (languageStorage, languageSelectConfig, $cookies, $rootScope) {
+            inject(function (languageStorage, languageSelectConfig, cookieHandler, $rootScope) {
                 this.languageStorage = languageStorage;
                 this.languageSelectConfig = languageSelectConfig;
-                this.$cookies = $cookies;
+                this.$cookies = cookieHandler;
                 this.$rootScope = $rootScope;
             });
         };
@@ -131,6 +131,10 @@ describe('languageStorage factory', function () {
         });
 
         it('should set the default language from the cookie', function () {
+            const angularVersion = window.__karma__.config.args[0];
+            if (angularVersion === '1.3') {
+                pending();
+            }
             expect(this.languageStorage.get()).toBe('pl');
         });
 
