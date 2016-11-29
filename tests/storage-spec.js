@@ -159,7 +159,7 @@ describe('languageStorage factory', function () {
             Object.defineProperty(window.navigator, 'language', {value: this.originalBrowserLanguage, configurable: true});
         });
 
-        it('should use the browser language', function () {
+        it('should use the browser language if it is in the choices', function () {
             expect(this.languageStorage.get()).toBe('en_us');
         });
 
