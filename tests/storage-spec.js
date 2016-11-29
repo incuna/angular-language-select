@@ -139,6 +139,9 @@ describe('languageStorage factory', function () {
     describe('when there is no cookie', function () {
 
         beforeEach(function () {
+            this.originalLanguageGetter = window.navigator.__lookupGetter__('language');
+            window.navigator.__defineGetter__('language', () => 'en-US');
+
             this.languageChoices = [
                 {
                     id: 'en_us',
@@ -150,6 +153,10 @@ describe('languageStorage factory', function () {
                 },
             ];
             this.setupModule();
+        });
+
+        afterEach(function () {
+            window.navigator.__defineGetter__('language', this.originalLanguageGetter);
         });
 
         it('should use the browser language', function () {
