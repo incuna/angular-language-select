@@ -131,6 +131,8 @@ describe('languageStorage factory', function () {
         });
 
         it('should set the default language from the cookie', function () {
+            // This test won't pass in angular < 1.4 due to how $browser (a private service)
+            //  is mocked so it doesn't read actual cookies from the document
             const angularVersion = window.__karma__.config.args[0];
             if (angularVersion === '1.3') {
                 pending();
