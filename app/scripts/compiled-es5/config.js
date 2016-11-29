@@ -9,7 +9,7 @@ _module.provider('languageSelectConfig', function () {
         id: 'en',
         label: 'English'
     }];
-    var _defaultLanguage = null;
+    var _defaultLanguageId = null;
 
     return {
         $get: function $get() {
@@ -17,8 +17,8 @@ _module.provider('languageSelectConfig', function () {
                 availableLanguages: function availableLanguages() {
                     return _availableLanguages;
                 },
-                defaultLanguage: function defaultLanguage() {
-                    return _defaultLanguage || _availableLanguages[0].id;
+                defaultLanguageId: function defaultLanguageId() {
+                    return _defaultLanguageId || _availableLanguages[0].id;
                 }
             };
         },
@@ -26,7 +26,7 @@ _module.provider('languageSelectConfig', function () {
             _availableLanguages = value;
         },
         setDefaultLanguage: function setDefaultLanguage(value) {
-            _defaultLanguage = value;
+            _defaultLanguageId = value;
         }
     };
 });

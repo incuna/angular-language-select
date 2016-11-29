@@ -9,7 +9,7 @@ module.provider('languageSelectConfig', function () {
             label: 'English',
         },
     ];
-    let defaultLanguage = null;
+    let defaultLanguageId = null;
 
     return {
         $get: function () {
@@ -17,8 +17,8 @@ module.provider('languageSelectConfig', function () {
                 availableLanguages: function () {
                     return availableLanguages;
                 },
-                defaultLanguage: function () {
-                    return defaultLanguage || availableLanguages[0].id;
+                defaultLanguageId: function () {
+                    return defaultLanguageId || availableLanguages[0].id;
                 },
             };
         },
@@ -26,7 +26,7 @@ module.provider('languageSelectConfig', function () {
             availableLanguages = value;
         },
         setDefaultLanguage: function (value) {
-            defaultLanguage = value;
+            defaultLanguageId = value;
         },
     };
 });

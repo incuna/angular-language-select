@@ -9,3 +9,8 @@ notifications:
 cache:
     directories:
         - $HOME/.npm
+
+before_script:
+    # Add display needed for karma tests
+    - export DISPLAY=:99.0
+    - sh -e /etc/init.d/xvfb start

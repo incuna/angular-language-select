@@ -94,7 +94,7 @@ module.exports = function (grunt) {
                 files: [{
                     expand: true,
                     cwd: '<%= config.srcScriptsDir %>',
-                    src: ['**/*.es.js'],
+                    src: ['**/*.js'],
                     dest: '<%= config.compiledScriptsDir %>',
                     ext: '.js',
                 }],
@@ -140,6 +140,18 @@ module.exports = function (grunt) {
             },
         },
         ngtemplates: ngTemplatesPaths.generate('', 'app', '<%= config.compiledScriptsDir %>'),
+        karma: {
+            options: {
+                configFile: 'tests/conf/karma.conf.js',
+            },
+            ci: {
+            },
+            dev: {
+                options: {
+                    singleRun: false,
+                },
+            },
+        },
     });
 
     // - - - T A S K S - - -
@@ -176,6 +188,7 @@ module.exports = function (grunt) {
             'jscs',
             'clean',
             'build',
+            'karma:ci',
         ]);
     });
 

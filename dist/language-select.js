@@ -10,7 +10,7 @@ _module.provider('languageSelectConfig', function () {
         id: 'en',
         label: 'English'
     }];
-    var _defaultLanguage = null;
+    var _defaultLanguageId = null;
 
     return {
         $get: function $get() {
@@ -18,8 +18,8 @@ _module.provider('languageSelectConfig', function () {
                 availableLanguages: function availableLanguages() {
                     return _availableLanguages;
                 },
-                defaultLanguage: function defaultLanguage() {
-                    return _defaultLanguage || _availableLanguages[0].id;
+                defaultLanguageId: function defaultLanguageId() {
+                    return _defaultLanguageId || _availableLanguages[0].id;
                 }
             };
         },
@@ -27,7 +27,7 @@ _module.provider('languageSelectConfig', function () {
             _availableLanguages = value;
         },
         setDefaultLanguage: function setDefaultLanguage(value) {
-            _defaultLanguage = value;
+            _defaultLanguageId = value;
         }
     };
 });
@@ -102,20 +102,25 @@ require('./storage');
 
 var _module = _libraries.angular.module('language-select.selector', ['language-select.storage-service']);
 
-_module.directive('languageSelector', ['languageStorage', '$window', function (languageStorage, $window) {
+_module.controller('languageSelectorController', ['languageStorage', '$window', function (languageStorage, $window) {
+    var _this = this;
+
+    this.selectedLanguage = languageStorage.get();
+    this.languageChoices = languageStorage.getLanguageChoices();
+
+    this.changeLanguage = function () {
+        languageStorage.set(_this.selectedLanguage);
+        $window.location.reload();
+    };
+}]);
+
+_module.directive('languageSelector', [function () {
     return {
         restrict: 'A',
         templateUrl: 'templates/language-select/language-options.html',
         scope: {},
-        link: function link(scope) {
-            scope.selectedLanguage = languageStorage.get();
-            scope.languageChoices = languageStorage.getLanguageChoices();
-
-            scope.changeLanguage = function () {
-                languageStorage.set(scope.selectedLanguage);
-                $window.location.reload();
-            };
-        }
+        controller: 'languageSelectorController',
+        controllerAs: 'selector'
     };
 }]);
 
@@ -132,9 +137,11 @@ require('./config');
 var _module = _libraries.angular.module('language-select.storage-service', ['ngCookies', 'language-select.config']);
 
 _module.factory('languageStorage', ['$rootScope', '$cookies', '$window', 'languageSelectConfig', function ($rootScope, $cookies, $window, languageSelectConfig) {
+    var cookieSignature = 'selectedLanguage';
+    var eventSignature = 'language-select:change';
 
     var normaliseLanguageCode = function normaliseLanguageCode(languageCode) {
-        return languageCode.toLowerCase().replace(/-/g, '_');
+        return languageCode && languageCode.toLowerCase().replace(/-/g, '_');
     };
 
     var languageChoices = languageSelectConfig.availableLanguages();
@@ -152,39 +159,45 @@ _module.factory('languageStorage', ['$rootScope', '$cookies', '$window', 'langua
         getLanguageChoice: function getLanguageChoice() {
             var languageId = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : selectedLanguageId;
 
-            var languageCode = normaliseLanguageCode(languageId);
-            return normalisedLanguageChoices[languageCode];
+            var normalisedLanguageId = normaliseLanguageCode(languageId);
+            return normalisedLanguageChoices[normalisedLanguageId];
         },
         get: function get() {
             return selectedLanguageId;
         },
         set: function set(languageId) {
             selectedLanguageId = languageId;
-            $cookies.put('selectedLanguageId', selectedLanguageId);
-            $rootScope.$broadcast('language-select:change', selectedLanguageId);
+            $cookies.put(cookieSignature, selectedLanguageId);
+            $rootScope.$broadcast(eventSignature, selectedLanguageId);
+        },
+        getCookieSingature: function getCookieSingature() {
+            return cookieSignature;
+        },
+        getEventSignature: function getEventSignature() {
+            return eventSignature;
         }
     };
 
-    var getLanguageChoiceIfValid = function getLanguageChoiceIfValid(languageId) {
+    var getLanguageIdIfValid = function getLanguageIdIfValid(languageId) {
         if (_libraries.angular.isDefined(languageId)) {
-            var choice = publicMethods.getLanguageChoice(languageId);
-            return choice && choice.id;
+            var languageChoice = publicMethods.getLanguageChoice(languageId);
+            return languageChoice && languageChoice.id;
         }
     };
 
-    var determineStartingLanguage = function determineStartingLanguage() {
-        var cookieLanguageId = $cookies.get('selectedLanguageId');
-        var browserLanguageId = $window.navigator.language || $window.navigator.userLanguage;
+    var determineStartingLanguageId = function determineStartingLanguageId() {
+        var rawCookieLanguageId = $cookies.get(cookieSignature);
+        var rawBrowserLanguageId = $window.navigator.language || $window.navigator.userLanguage;
 
-        var cookieLangaugeChoice = getLanguageChoiceIfValid(cookieLanguageId);
-        var browserLanguageChoice = getLanguageChoiceIfValid(browserLanguageId);
-        var defaultLanguage = languageSelectConfig.defaultLanguage();
+        var cookieLangaugeId = getLanguageIdIfValid(rawCookieLanguageId);
+        var browserLanguageId = getLanguageIdIfValid(rawBrowserLanguageId);
+        var defaultLanguageId = languageSelectConfig.defaultLanguageId();
 
-        return cookieLangaugeChoice || browserLanguageChoice || defaultLanguage;
+        return cookieLangaugeId || browserLanguageId || defaultLanguageId;
     };
 
-    var startingLanguage = determineStartingLanguage();
-    publicMethods.set(startingLanguage);
+    var startingLanguageId = determineStartingLanguageId();
+    publicMethods.set(startingLanguageId);
 
     return publicMethods;
 }]);
@@ -199,7 +212,7 @@ require('./selector');
 // This module provides a directive which includes the language select
 //   and provides the entry point for the language switch functionality.
 
-var _module = _libraries.angular.module('language-select.switch', []);
+var _module = _libraries.angular.module('language-select.switch', ['language-select.selector']);
 
 _module.directive('languageSwitch', [function () {
     return {
