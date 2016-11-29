@@ -18,6 +18,7 @@ addons:
             - g++-4.8
 
 env:
+    - CXX=g++-4.8
     matrix:
         - ANGULAR_VERSION=1.2.15
         - ANGULAR_VERSION=1.3
