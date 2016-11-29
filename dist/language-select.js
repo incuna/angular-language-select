@@ -143,7 +143,7 @@ var _module = _libraries.angular.module('language-select.storage-service', ['ngC
 // Implement a custom cookie handler to deal with older versions of $cookies
 _module.service('cookieHandler', ['$cookies', function ($cookies) {
     this.put = function (name, value) {
-        if ($cookies.put) {
+        if (_libraries.angular.isFunction($cookies.put)) {
             $cookies.put(name, value);
         } else {
             $cookies[name] = value;
@@ -151,7 +151,7 @@ _module.service('cookieHandler', ['$cookies', function ($cookies) {
     };
 
     this.get = function (name) {
-        if ($cookies.get) {
+        if (_libraries.angular.isFunction($cookies.get)) {
             return $cookies.get(name);
         }
 

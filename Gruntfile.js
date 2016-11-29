@@ -143,9 +143,6 @@ module.exports = function (grunt) {
         karma: {
             options: {
                 configFile: 'tests/conf/karma.conf.js',
-                client: {
-                    args: [process.env.ANGULAR_VERSION],
-                },
             },
             ci: {
             },
