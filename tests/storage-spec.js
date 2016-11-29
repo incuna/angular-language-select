@@ -139,8 +139,8 @@ describe('languageStorage factory', function () {
     describe('when there is no cookie', function () {
 
         beforeEach(function () {
-            this.originalLanguageGetter = window.navigator.__lookupGetter__('language');
-            window.navigator.__defineGetter__('language', () => 'en-US');
+            this.originalBrowserLanguage = window.navigator.language;
+            Object.defineProperty(window.navigator, 'language', {value: 'en-US', configurable: true});
 
             this.languageChoices = [
                 {
@@ -156,7 +156,7 @@ describe('languageStorage factory', function () {
         });
 
         afterEach(function () {
-            window.navigator.__defineGetter__('language', this.originalLanguageGetter);
+            Object.defineProperty(window.navigator, 'language', {value: this.originalBrowserLanguage, configurable: true});
         });
 
         it('should use the browser language', function () {
