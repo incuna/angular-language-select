@@ -23,7 +23,7 @@
     "tests"
   ],
   "dependencies": {
-    "angular": "^1.5.9",
-    "angular-cookies": "^1.5.9"
+    "angular": "1.2 - 1.5",
+    "angular-cookies": "1.2 - 1.5"
   }
 }
