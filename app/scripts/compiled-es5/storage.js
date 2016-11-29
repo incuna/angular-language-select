@@ -9,7 +9,26 @@ require('./config');
 
 var _module = _libraries.angular.module('language-select.storage-service', ['ngCookies', 'language-select.config']);
 
-_module.factory('languageStorage', ['$rootScope', '$cookies', '$window', 'languageSelectConfig', function ($rootScope, $cookies, $window, languageSelectConfig) {
+// Implement a custom cookie handler to deal with older versions of $cookies
+_module.service('cookieHandler', ['$cookies', function ($cookies) {
+    this.put = function (name, value) {
+        if (_libraries.angular.isFunction($cookies.put)) {
+            $cookies.put(name, value);
+        } else {
+            $cookies[name] = value;
+        }
+    };
+
+    this.get = function (name) {
+        if (_libraries.angular.isFunction($cookies.get)) {
+            return $cookies.get(name);
+        }
+
+        return $cookies[name];
+    };
+}]);
+
+_module.factory('languageStorage', ['$rootScope', '$window', 'languageSelectConfig', 'cookieHandler', function ($rootScope, $window, languageSelectConfig, cookieHandler) {
     var cookieSignature = 'selectedLanguage';
     var eventSignature = 'language-select:change';
 
@@ -40,7 +59,7 @@ _module.factory('languageStorage', ['$rootScope', '$cookies', '$window', 'langua
         },
         set: function set(languageId) {
             selectedLanguageId = languageId;
-            $cookies.put(cookieSignature, selectedLanguageId);
+            cookieHandler.put(cookieSignature, selectedLanguageId);
             $rootScope.$broadcast(eventSignature, selectedLanguageId);
         },
         getCookieSingature: function getCookieSingature() {
@@ -59,7 +78,7 @@ _module.factory('languageStorage', ['$rootScope', '$cookies', '$window', 'langua
     };
 
     var determineStartingLanguageId = function determineStartingLanguageId() {
-        var rawCookieLanguageId = $cookies.get(cookieSignature);
+        var rawCookieLanguageId = cookieHandler.get(cookieSignature);
         var rawBrowserLanguageId = $window.navigator.language || $window.navigator.userLanguage;
 
         var cookieLangaugeId = getLanguageIdIfValid(rawCookieLanguageId);

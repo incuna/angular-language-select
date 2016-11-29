@@ -57,12 +57,16 @@ _module.factory('languageInterceptor', ['languageStorage', function (languageSto
     return languageInterceptor;
 }]);
 
+_module.config(['$httpProvider', function ($httpProvider) {
+    $httpProvider.interceptors.push('languageInterceptor');
+}]);
+
 },{"./libraries":4,"./storage":7}],3:[function(require,module,exports){
 angular.module('-language-select.templates', []).run(['$templateCache', function($templateCache) {
   'use strict';
 
   $templateCache.put('templates/language-select/language-options.html',
-    "<div class=select-wrapper><select ng-model=selectedLanguage ng-change=changeLanguage() ng-options=\"language.id as language.label for language in languageChoices\"></select></div>"
+    "<div class=select-wrapper><select ng-model=selector.selectedLanguage ng-change=selector.changeLanguage() ng-options=\"language.id as language.label for language in selector.languageChoices\"></select></div>"
   );
 
 
@@ -88,9 +92,11 @@ var _libraries = require('./libraries');
 
 require('./switch');
 
+require('./interceptor');
+
 _libraries.angular.module('language-select', ['language-select.switch']);
 
-},{"./libraries":4,"./switch":8}],6:[function(require,module,exports){
+},{"./interceptor":2,"./libraries":4,"./switch":8}],6:[function(require,module,exports){
 'use strict';
 
 var _libraries = require('./libraries');
@@ -103,13 +109,11 @@ require('./storage');
 var _module = _libraries.angular.module('language-select.selector', ['language-select.storage-service']);
 
 _module.controller('languageSelectorController', ['languageStorage', '$window', function (languageStorage, $window) {
-    var _this = this;
-
     this.selectedLanguage = languageStorage.get();
     this.languageChoices = languageStorage.getLanguageChoices();
 
     this.changeLanguage = function () {
-        languageStorage.set(_this.selectedLanguage);
+        languageStorage.set(this.selectedLanguage);
         $window.location.reload();
     };
 }]);
@@ -136,7 +140,26 @@ require('./config');
 
 var _module = _libraries.angular.module('language-select.storage-service', ['ngCookies', 'language-select.config']);
 
-_module.factory('languageStorage', ['$rootScope', '$cookies', '$window', 'languageSelectConfig', function ($rootScope, $cookies, $window, languageSelectConfig) {
+// Implement a custom cookie handler to deal with older versions of $cookies
+_module.service('cookieHandler', ['$cookies', function ($cookies) {
+    this.put = function (name, value) {
+        if (_libraries.angular.isFunction($cookies.put)) {
+            $cookies.put(name, value);
+        } else {
+            $cookies[name] = value;
+        }
+    };
+
+    this.get = function (name) {
+        if (_libraries.angular.isFunction($cookies.get)) {
+            return $cookies.get(name);
+        }
+
+        return $cookies[name];
+    };
+}]);
+
+_module.factory('languageStorage', ['$rootScope', '$window', 'languageSelectConfig', 'cookieHandler', function ($rootScope, $window, languageSelectConfig, cookieHandler) {
     var cookieSignature = 'selectedLanguage';
     var eventSignature = 'language-select:change';
 
@@ -167,7 +190,7 @@ _module.factory('languageStorage', ['$rootScope', '$cookies', '$window', 'langua
         },
         set: function set(languageId) {
             selectedLanguageId = languageId;
-            $cookies.put(cookieSignature, selectedLanguageId);
+            cookieHandler.put(cookieSignature, selectedLanguageId);
             $rootScope.$broadcast(eventSignature, selectedLanguageId);
         },
         getCookieSingature: function getCookieSingature() {
@@ -186,7 +209,7 @@ _module.factory('languageStorage', ['$rootScope', '$cookies', '$window', 'langua
     };
 
     var determineStartingLanguageId = function determineStartingLanguageId() {
-        var rawCookieLanguageId = $cookies.get(cookieSignature);
+        var rawCookieLanguageId = cookieHandler.get(cookieSignature);
         var rawBrowserLanguageId = $window.navigator.language || $window.navigator.userLanguage;
 
         var cookieLangaugeId = getLanguageIdIfValid(rawCookieLanguageId);

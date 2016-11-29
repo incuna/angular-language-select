@@ -15,10 +15,10 @@ describe('languageStorage factory', function () {
                 },
             });
 
-            inject(function (languageStorage, languageSelectConfig, $cookies, $rootScope) {
+            inject(function (languageStorage, languageSelectConfig, cookieHandler, $rootScope) {
                 this.languageStorage = languageStorage;
                 this.languageSelectConfig = languageSelectConfig;
-                this.$cookies = $cookies;
+                this.$cookies = cookieHandler;
                 this.$rootScope = $rootScope;
             });
         };
@@ -131,6 +131,11 @@ describe('languageStorage factory', function () {
         });
 
         it('should set the default language from the cookie', function () {
+            // This test won't pass in angular < 1.4 due to how $browser (a private service)
+            //  is mocked so it doesn't read actual cookies from the document
+            if (angular.version.minor < 4) {
+                pending();
+            }
             expect(this.languageStorage.get()).toBe('pl');
         });
 

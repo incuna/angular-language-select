@@ -10,12 +10,34 @@ const module = angular.module('language-select.storage-service', [
     'language-select.config',
 ]);
 
+// Implement a custom cookie handler to deal with older versions of $cookies
+module.service('cookieHandler', [
+    '$cookies',
+    function ($cookies) {
+        this.put = function (name, value) {
+            if (angular.isFunction($cookies.put)) {
+                $cookies.put(name, value);
+            } else {
+                $cookies[name] = value;
+            }
+        };
+
+        this.get = function (name) {
+            if (angular.isFunction($cookies.get)) {
+                return $cookies.get(name);
+            }
+
+            return $cookies[name];
+        };
+    },
+]);
+
 module.factory('languageStorage', [
     '$rootScope',
-    '$cookies',
     '$window',
     'languageSelectConfig',
-    function ($rootScope, $cookies, $window, languageSelectConfig) {
+    'cookieHandler',
+    function ($rootScope, $window, languageSelectConfig, cookieHandler) {
         const cookieSignature = 'selectedLanguage';
         const eventSignature = 'language-select:change';
 
@@ -42,7 +64,7 @@ module.factory('languageStorage', [
             },
             set: function (languageId) {
                 selectedLanguageId = languageId;
-                $cookies.put(cookieSignature, selectedLanguageId);
+                cookieHandler.put(cookieSignature, selectedLanguageId);
                 $rootScope.$broadcast(eventSignature, selectedLanguageId);
             },
             getCookieSingature: function () {
@@ -61,7 +83,7 @@ module.factory('languageStorage', [
         };
 
         const determineStartingLanguageId = function () {
-            const rawCookieLanguageId = $cookies.get(cookieSignature);
+            const rawCookieLanguageId = cookieHandler.get(cookieSignature);
             const rawBrowserLanguageId = $window.navigator.language || $window.navigator.userLanguage;
 
             const cookieLangaugeId = getLanguageIdIfValid(rawCookieLanguageId);
@@ -77,4 +99,3 @@ module.factory('languageStorage', [
         return publicMethods;
     },
 ]);
-
