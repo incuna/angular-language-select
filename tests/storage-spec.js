@@ -149,12 +149,12 @@ describe('languageStorage factory', function () {
 
             this.languageChoices = [
                 {
-                    id: 'en_us',
-                    label: 'English',
-                },
-                {
                     id: 'pl',
                     label: 'Polski',
+                },
+                {
+                    id: 'en_us',
+                    label: 'English',
                 },
             ];
             this.setupModule();
