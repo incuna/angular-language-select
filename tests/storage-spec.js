@@ -147,6 +147,8 @@ describe('languageStorage factory', function () {
             this.originalBrowserLanguage = window.navigator.language;
             Object.defineProperty(window.navigator, 'language', {value: 'en-US', configurable: true});
 
+            // The tested language needs not to be the first one so we are actually testing
+            //  that it is chosen and not that it is used as the default fallback choice
             this.languageChoices = [
                 {
                     id: 'pl',
