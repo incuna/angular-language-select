@@ -19,7 +19,6 @@ module.controller('languageSelectorController', [
         this.selectedLanguageId = languageStorage.get();
         this.languageChoices = languageStorage.getLanguageChoices();
 
-
         this.changeLanguage = function (selectedLanguageId = this.selectedLanguageId) {
             languageStorage.set(selectedLanguageId);
             $window.location.reload();

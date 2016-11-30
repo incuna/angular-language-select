@@ -1,3 +1,8 @@
+# upcoming
+
+* BREAKING CHANGE: namespace template and directives with `inc-`
+* Add `inc-language-links` directive to use links instead of a dropdown
+
 ### 1.0.1
 
 * Include source files in `npm` package
