@@ -9,11 +9,11 @@ const module = angular.module('language-select.switch', [
     'language-select.selector',
 ]);
 
-module.directive('languageSwitch', [
+module.directive('incLanguageSwitch', [
     function () {
         return {
             restrict: 'A',
-            templateUrl: 'templates/language-select/language-switch.html',
+            templateUrl: 'templates/inc-language-select/language-switch.html',
         };
     },
 ]);

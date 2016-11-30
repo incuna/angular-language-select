@@ -9,9 +9,9 @@ require('./selector');
 
 var _module = _libraries.angular.module('language-select.switch', ['language-select.selector']);
 
-_module.directive('languageSwitch', [function () {
+_module.directive('incLanguageSwitch', [function () {
     return {
         restrict: 'A',
-        templateUrl: 'templates/language-select/language-switch.html'
+        templateUrl: 'templates/inc-language-select/language-switch.html'
     };
 }]);
