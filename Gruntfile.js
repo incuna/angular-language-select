@@ -35,7 +35,7 @@ module.exports = function (grunt) {
             templates: {
                 sourceDir: 'templates/twig-source',
                 sourceFiles: '<%= config.templates.sourceDir %>/**/*.html',
-                generatedDir: 'templates/generated',
+                generatedDir: 'generated/templates',
                 generatedFiles: '<%= config.templates.generatedDir %>/**/*.html',
             },
 

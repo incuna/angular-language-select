@@ -31,7 +31,7 @@ module.directive('incLanguageSelector', [
     function () {
         return {
             restrict: 'A',
-            templateUrl: 'templates/language-select/language-options.html',
+            templateUrl: 'templates/inc-language-select/language-options.html',
             scope: {},
             controller: 'languageSelectorController',
             controllerAs: 'selector',
@@ -43,7 +43,7 @@ module.directive('incLanguageLinks', [
     function () {
         return {
             restrict: 'A',
-            templateUrl: 'templates/language-select/language-links.html',
+            templateUrl: 'templates/ing-language-select/language-links.html',
             scope: {},
             controller: 'languageSelectorController',
             controllerAs: 'selector',
