@@ -1,0 +1,10 @@
+<ul>
+    <li ng-repeat="language in selector.languageChoices">
+        <span
+            ng-click="selector.changeLanguage(language.id)"
+            ng-class="{selected: language.id === selector.selectedLanguageId}"
+        >
+            {% raw %}{{ language.label }}{% endraw %}
+        </span>
+    </li>
+</ul>

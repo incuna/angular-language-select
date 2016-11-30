@@ -16,11 +16,12 @@ module.controller('languageSelectorController', [
         languageStorage,
         $window
     ) {
-        this.selectedLanguage = languageStorage.get();
+        this.selectedLanguageId = languageStorage.get();
         this.languageChoices = languageStorage.getLanguageChoices();
 
-        this.changeLanguage = function () {
-            languageStorage.set(this.selectedLanguage);
+
+        this.changeLanguage = function (selectedLanguageId = this.selectedLanguageId) {
+            languageStorage.set(selectedLanguageId);
             $window.location.reload();
         };
     },
@@ -31,6 +32,18 @@ module.directive('languageSelector', [
         return {
             restrict: 'A',
             templateUrl: 'templates/language-select/language-options.html',
+            scope: {},
+            controller: 'languageSelectorController',
+            controllerAs: 'selector',
+        };
+    },
+]);
+
+module.directive('languageLinks', [
+    function () {
+        return {
+            restrict: 'A',
+            templateUrl: 'templates/language-select/language-links.html',
             scope: {},
             controller: 'languageSelectorController',
             controllerAs: 'selector',

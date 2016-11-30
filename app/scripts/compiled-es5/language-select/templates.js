@@ -1,8 +1,13 @@
 angular.module('-language-select.templates', []).run(['$templateCache', function($templateCache) {
   'use strict';
 
+  $templateCache.put('templates/language-select/language-links.html',
+    "<ul><li ng-repeat=\"language in selector.languageChoices\"><span ng-click=selector.changeLanguage(language.id) ng-class=\"{selected: language.id === selector.selectedLanguageId}\">{{ language.label }}</span></li></ul>"
+  );
+
+
   $templateCache.put('templates/language-select/language-options.html',
-    "<div class=select-wrapper><select ng-model=selector.selectedLanguage ng-change=selector.changeLanguage() ng-options=\"language.id as language.label for language in selector.languageChoices\"></select></div>"
+    "<div class=select-wrapper><select ng-model=selector.selectedLanguageId ng-change=selector.changeLanguage() ng-options=\"language.id as language.label for language in selector.languageChoices\"></select></div>"
   );
 
 
