@@ -21,7 +21,7 @@ _module.controller('languageSelectorController', ['languageStorage', '$window', 
     };
 }]);
 
-_module.directive('languageSelector', [function () {
+_module.directive('incLanguageSelector', [function () {
     return {
         restrict: 'A',
         templateUrl: 'templates/language-select/language-options.html',
@@ -31,7 +31,7 @@ _module.directive('languageSelector', [function () {
     };
 }]);
 
-_module.directive('languageLinks', [function () {
+_module.directive('incLanguageLinks', [function () {
     return {
         restrict: 'A',
         templateUrl: 'templates/language-select/language-links.html',

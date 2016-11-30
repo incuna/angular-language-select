@@ -27,7 +27,7 @@ module.controller('languageSelectorController', [
     },
 ]);
 
-module.directive('languageSelector', [
+module.directive('incLanguageSelector', [
     function () {
         return {
             restrict: 'A',
@@ -39,7 +39,7 @@ module.directive('languageSelector', [
     },
 ]);
 
-module.directive('languageLinks', [
+module.directive('incLanguageLinks', [
     function () {
         return {
             restrict: 'A',
