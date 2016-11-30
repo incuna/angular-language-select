@@ -2,6 +2,19 @@
 
 Angular module for managing language / locale selection.
 
+## Installation
+
+* With `npm`
+
+`npm install angular-language-select`
+
+In your project you can `import 'angular-language-select'` to make the module available to angular.
+
+* With `bower`
+
+`bower install angular-language-select`
+
+Include the `dist/language-select.js` (or `dist/language-select.min.js`) script in your app.
 
 ## Configuration
 
@@ -40,12 +53,9 @@ The `languageInterceptor` can be used to set the `Accept-Language` to the curren
 const module = angular.module('app', [
     'language-select.language-interceptor'
 ]);
-
-
-module.config(['$httpProvider', function ($httpProvider) {
-    $httpProvider.interceptors.push('languageInterceptor');
-}]);
 ```
+
+If the module is loaded it will push the interceptor to the `$http.interceptors` automatically.
 
 ### language-select:change event.
 
