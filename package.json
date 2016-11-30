@@ -1,6 +1,6 @@
 {
   "name": "angular-language-select",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Language / locale select",
   "main": "app/scripts/compiled-es5/main.js",
   "repository": {
