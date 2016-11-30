@@ -1,3 +1,7 @@
+### 1.0.1
+
+* Include source files in `npm` package
+
 # 1.0.0
 
 * Angular `1.2` - `1.5` compatability

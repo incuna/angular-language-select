@@ -28,7 +28,8 @@
     "lodash": "4.17.2"
   },
   "files": [
-    "dist"
+    "dist",
+    "app"
   ],
   "devDependencies": {
     "angular": "1.2 - 1.5",
