@@ -16,21 +16,33 @@ module.controller('languageSelectorController', [
         languageStorage,
         $window
     ) {
-        this.selectedLanguage = languageStorage.get();
+        this.selectedLanguageId = languageStorage.get();
         this.languageChoices = languageStorage.getLanguageChoices();
 
-        this.changeLanguage = function () {
-            languageStorage.set(this.selectedLanguage);
+        this.changeLanguage = function (selectedLanguageId = this.selectedLanguageId) {
+            languageStorage.set(selectedLanguageId);
             $window.location.reload();
         };
     },
 ]);
 
-module.directive('languageSelector', [
+module.directive('incLanguageSelector', [
     function () {
         return {
             restrict: 'A',
-            templateUrl: 'templates/language-select/language-options.html',
+            templateUrl: 'templates/inc-language-select/language-switch/language-options.html',
+            scope: {},
+            controller: 'languageSelectorController',
+            controllerAs: 'selector',
+        };
+    },
+]);
+
+module.directive('incLanguageLinks', [
+    function () {
+        return {
+            restrict: 'A',
+            templateUrl: 'templates/inc-language-select/language-switch/language-links.html',
             scope: {},
             controller: 'languageSelectorController',
             controllerAs: 'selector',

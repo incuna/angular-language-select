@@ -139,7 +139,7 @@ module.exports = function (grunt) {
                 },
             },
         },
-        ngtemplates: ngTemplatesPaths.generate('', 'app', '<%= config.compiledScriptsDir %>'),
+        ngtemplates: ngTemplatesPaths.generate('inc-language-select', 'app', '<%= config.compiledScriptsDir %>'),
         karma: {
             options: {
                 configFile: 'tests/conf/karma.conf.js',

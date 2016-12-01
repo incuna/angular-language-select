@@ -62,15 +62,20 @@ _module.config(['$httpProvider', function ($httpProvider) {
 }]);
 
 },{"./libraries":4,"./storage":7}],3:[function(require,module,exports){
-angular.module('-language-select.templates', []).run(['$templateCache', function($templateCache) {
+angular.module('inc-language-select-language-switch.templates', []).run(['$templateCache', function($templateCache) {
   'use strict';
 
-  $templateCache.put('templates/language-select/language-options.html',
-    "<div class=select-wrapper><select ng-model=selector.selectedLanguage ng-change=selector.changeLanguage() ng-options=\"language.id as language.label for language in selector.languageChoices\"></select></div>"
+  $templateCache.put('templates/inc-language-select/language-switch/language-links.html',
+    "<div class=language-links><span class=language-link ng-repeat=\"language in selector.languageChoices\" ng-click=selector.changeLanguage(language.id) ng-class=\"{selected: language.id === selector.selectedLanguageId}\">{{ language.label }}</span></div>"
   );
 
 
-  $templateCache.put('templates/language-select/language-switch.html',
+  $templateCache.put('templates/inc-language-select/language-switch/language-options.html',
+    "<div class=select-wrapper><select ng-model=selector.selectedLanguageId ng-change=selector.changeLanguage() ng-options=\"language.id as language.label for language in selector.languageChoices\"></select></div>"
+  );
+
+
+  $templateCache.put('templates/inc-language-select/language-switch/language-switch.html',
     "<div class=language-switch><svg class=\"inline-svg earth\"><use xlink:href=#svg-earth></use></svg><div class=language-switch-inner language-selector></div><svg class=\"inline-svg arrow-down\"><use xlink:href=#svg-arrow-down></use></svg></div>"
   );
 
@@ -109,19 +114,31 @@ require('./storage');
 var _module = _libraries.angular.module('language-select.selector', ['language-select.storage-service']);
 
 _module.controller('languageSelectorController', ['languageStorage', '$window', function (languageStorage, $window) {
-    this.selectedLanguage = languageStorage.get();
+    this.selectedLanguageId = languageStorage.get();
     this.languageChoices = languageStorage.getLanguageChoices();
 
     this.changeLanguage = function () {
-        languageStorage.set(this.selectedLanguage);
+        var selectedLanguageId = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.selectedLanguageId;
+
+        languageStorage.set(selectedLanguageId);
         $window.location.reload();
     };
 }]);
 
-_module.directive('languageSelector', [function () {
+_module.directive('incLanguageSelector', [function () {
     return {
         restrict: 'A',
-        templateUrl: 'templates/language-select/language-options.html',
+        templateUrl: 'templates/inc-language-select/language-switch/language-options.html',
+        scope: {},
+        controller: 'languageSelectorController',
+        controllerAs: 'selector'
+    };
+}]);
+
+_module.directive('incLanguageLinks', [function () {
+    return {
+        restrict: 'A',
+        templateUrl: 'templates/inc-language-select/language-switch/language-links.html',
         scope: {},
         controller: 'languageSelectorController',
         controllerAs: 'selector'
@@ -237,10 +254,10 @@ require('./selector');
 
 var _module = _libraries.angular.module('language-select.switch', ['language-select.selector']);
 
-_module.directive('languageSwitch', [function () {
+_module.directive('incLanguageSwitch', [function () {
     return {
         restrict: 'A',
-        templateUrl: 'templates/language-select/language-switch.html'
+        templateUrl: 'templates/inc-language-select/language-switch.html'
     };
 }]);
 
