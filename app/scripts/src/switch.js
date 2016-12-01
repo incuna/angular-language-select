@@ -13,7 +13,7 @@ module.directive('incLanguageSwitch', [
     function () {
         return {
             restrict: 'A',
-            templateUrl: 'templates/inc-language-select/language-switch.html',
+            templateUrl: 'templates/inc-language-select/language-switch/language-switch.html',
         };
     },
 ]);
