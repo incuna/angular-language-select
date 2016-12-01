@@ -1,3 +1,7 @@
+### 2.0.1
+
+* Remove the `files` key from `package.json` so required files are not removed from the package
+
 # 2.0.0
 
 * BREAKING CHANGE: namespace template and directives with `inc-`
