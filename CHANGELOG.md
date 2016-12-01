@@ -1,4 +1,4 @@
-# upcoming
+# 2.0.0
 
 * BREAKING CHANGE: namespace template and directives with `inc-`
 * Add `inc-language-links` directive to use links instead of a dropdown
