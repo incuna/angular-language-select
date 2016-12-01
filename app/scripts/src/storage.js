@@ -45,19 +45,18 @@ module.factory('languageStorage', [
             return languageCode && languageCode.toLowerCase().replace(/-/g, '_');
         };
 
-        const languageChoices = languageSelectConfig.availableLanguages();
-
         const convertLanguageChoices = function (choices) {
-            let result = {};
+            let keyedChoices = {};
 
             choices.forEach((choice) => {
                 const normalisedLanguageCode = normaliseLanguageCode(choice.id);
-                result[normalisedLanguageCode] = choice;
+                keyedChoices[normalisedLanguageCode] = choice;
             });
 
-            return result;
+            return keyedChoices;
         };
 
+        const languageChoices = languageSelectConfig.availableLanguages();
         const normalisedLanguageChoices = convertLanguageChoices(languageChoices);
 
         let selectedLanguageId;
