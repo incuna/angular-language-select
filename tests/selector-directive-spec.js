@@ -22,8 +22,9 @@ describe('languageSelectorController', function () {
     });
 
     it('should have the properties set', function () {
-        expect(this.ctrl.selectedLanguage).toBe(this.defaultLanguage);
+        expect(this.ctrl.selectedLanguageId).toBe(this.defaultLanguage);
         expect(this.ctrl.languageChoices).toEqual(this.choices);
     });
 
 });
+
