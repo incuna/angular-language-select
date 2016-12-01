@@ -24,12 +24,10 @@
     "Henry Blyth <henry@incuna.com>"
   ],
   "dependencies": {
-    "angular": "1.5.8",
-    "lodash": "4.17.2"
+    "angular": "1.2 - 1.5",
+    "angular-cookies": "1.2 - 1.5"
   },
   "devDependencies": {
-    "angular": "1.2 - 1.5",
-    "angular-cookies": "1.2 - 1.5",
     "angular-mocks": "1.2 - 1.5",
     "babel-preset-es2015": "^6.18.0",
     "babelify": "7.3.0",

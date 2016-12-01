@@ -38,9 +38,18 @@ _module.factory('languageStorage', ['$rootScope', '$window', 'languageSelectConf
 
     var languageChoices = languageSelectConfig.availableLanguages();
 
-    var normalisedLanguageChoices = _libraries._.keyBy(languageChoices, function (choice) {
-        return normaliseLanguageCode(choice.id);
-    });
+    var convertLanguageChoices = function convertLanguageChoices(choices) {
+        var result = {};
+
+        choices.forEach(function (choice) {
+            var normalisedLanguageCode = normaliseLanguageCode(choice.id);
+            result[normalisedLanguageCode] = choice;
+        });
+
+        return result;
+    };
+
+    var normalisedLanguageChoices = convertLanguageChoices(languageChoices);
 
     var selectedLanguageId = void 0;
 
