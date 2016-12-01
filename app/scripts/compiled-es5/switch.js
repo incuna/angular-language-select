@@ -12,6 +12,6 @@ var _module = _libraries.angular.module('language-select.switch', ['language-sel
 _module.directive('incLanguageSwitch', [function () {
     return {
         restrict: 'A',
-        templateUrl: 'templates/inc-language-select/language-switch.html'
+        templateUrl: 'templates/inc-language-select/language-switch/language-switch.html'
     };
 }]);
