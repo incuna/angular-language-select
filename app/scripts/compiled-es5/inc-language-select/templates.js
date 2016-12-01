@@ -2,7 +2,7 @@ angular.module('-inc-language-select.templates', []).run(['$templateCache', func
   'use strict';
 
   $templateCache.put('templates/inc-language-select/language-links.html',
-    "<ul><li ng-repeat=\"language in selector.languageChoices\"><span ng-click=selector.changeLanguage(language.id) ng-class=\"{selected: language.id === selector.selectedLanguageId}\">{{ language.label }}</span></li></ul>"
+    "<div class=language-links><span class=language-link ng-repeat=\"language in selector.languageChoices\" ng-click=selector.changeLanguage(language.id) ng-class=\"{selected: language.id === selector.selectedLanguageId}\">{{ language.label }}</span></div>"
   );
 
 
@@ -12,7 +12,7 @@ angular.module('-inc-language-select.templates', []).run(['$templateCache', func
 
 
   $templateCache.put('templates/inc-language-select/language-switch.html',
-    "<div class=language-switch><svg class=\"inline-svg earth\"><use xlink:href=#svg-earth></use></svg><div class=language-switch-inner inc-language-selector></div><svg class=\"inline-svg arrow-down\"><use xlink:href=#svg-arrow-down></use></svg></div>"
+    "<div class=language-switch><svg class=\"inline-svg earth\"><use xlink:href=#svg-earth></use></svg><div class=language-switch-inner language-selector></div><svg class=\"inline-svg arrow-down\"><use xlink:href=#svg-arrow-down></use></svg></div>"
   );
 
 }]);
