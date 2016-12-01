@@ -36,11 +36,19 @@ _module.factory('languageStorage', ['$rootScope', '$window', 'languageSelectConf
         return languageCode && languageCode.toLowerCase().replace(/-/g, '_');
     };
 
-    var languageChoices = languageSelectConfig.availableLanguages();
+    var convertLanguageChoices = function convertLanguageChoices(choices) {
+        var keyedChoices = {};
 
-    var normalisedLanguageChoices = _libraries._.keyBy(languageChoices, function (choice) {
-        return normaliseLanguageCode(choice.id);
-    });
+        choices.forEach(function (choice) {
+            var normalisedLanguageCode = normaliseLanguageCode(choice.id);
+            keyedChoices[normalisedLanguageCode] = choice;
+        });
+
+        return keyedChoices;
+    };
+
+    var languageChoices = languageSelectConfig.availableLanguages();
+    var normalisedLanguageChoices = convertLanguageChoices(languageChoices);
 
     var selectedLanguageId = void 0;
 

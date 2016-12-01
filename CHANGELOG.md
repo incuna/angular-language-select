@@ -1,3 +1,7 @@
+# upcoming
+
+* Remove `lodash` dependency
+
 ### 2.0.1
 
 * Remove the `files` key from `package.json` so required files are not removed from the package

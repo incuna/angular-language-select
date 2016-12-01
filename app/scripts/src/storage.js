@@ -1,4 +1,4 @@
-import { angular, _ } from './libraries';
+import { angular } from './libraries';
 
 import './config';
 
@@ -45,9 +45,19 @@ module.factory('languageStorage', [
             return languageCode && languageCode.toLowerCase().replace(/-/g, '_');
         };
 
-        const languageChoices = languageSelectConfig.availableLanguages();
+        const convertLanguageChoices = function (choices) {
+            let keyedChoices = {};
 
-        const normalisedLanguageChoices = _.keyBy(languageChoices, (choice) => normaliseLanguageCode(choice.id));
+            choices.forEach((choice) => {
+                const normalisedLanguageCode = normaliseLanguageCode(choice.id);
+                keyedChoices[normalisedLanguageCode] = choice;
+            });
+
+            return keyedChoices;
+        };
+
+        const languageChoices = languageSelectConfig.availableLanguages();
+        const normalisedLanguageChoices = convertLanguageChoices(languageChoices);
 
         let selectedLanguageId;
 
