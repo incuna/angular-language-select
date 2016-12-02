@@ -1,4 +1,4 @@
-# upcoming
+## 2.1.0
 
 * Remove `lodash` dependency
 
