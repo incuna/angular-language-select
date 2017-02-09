@@ -1,3 +1,7 @@
+# upcoming
+
+* Reload browser when no cookie is set in order to reload locale files
+
 ## 2.1.0
 
 * Remove `lodash` dependency

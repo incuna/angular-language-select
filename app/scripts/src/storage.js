@@ -32,12 +32,21 @@ module.service('cookieHandler', [
     },
 ]);
 
+module.factory('windowReload', [
+    function () {
+        return function () {
+            console.log('a');
+        }
+    }
+]);
+
 module.factory('languageStorage', [
     '$rootScope',
     '$window',
     'languageSelectConfig',
     'cookieHandler',
-    function ($rootScope, $window, languageSelectConfig, cookieHandler) {
+    'windowReload',
+    function ($rootScope, $window, languageSelectConfig, cookieHandler, windowReload) {
         const cookieSignature = 'selectedLanguage';
         const eventSignature = 'language-select:change';
 
@@ -92,7 +101,7 @@ module.factory('languageStorage', [
             }
         };
 
-        const determineStartingLanguageId = function () {
+        const determineStartingLanguage = function () {
             const rawCookieLanguageId = cookieHandler.get(cookieSignature);
             const rawBrowserLanguageId = $window.navigator.language || $window.navigator.userLanguage;
 
@@ -100,11 +109,18 @@ module.factory('languageStorage', [
             const browserLanguageId = getLanguageIdIfValid(rawBrowserLanguageId);
             const defaultLanguageId = languageSelectConfig.defaultLanguageId();
 
-            return cookieLangaugeId || browserLanguageId || defaultLanguageId;
+            return {
+                id: cookieLangaugeId || browserLanguageId || defaultLanguageId,
+                cookieWasSet: Boolean(rawCookieLanguageId)
+            }
         };
 
-        const startingLanguageId = determineStartingLanguageId();
-        publicMethods.set(startingLanguageId);
+        const startingLanguage = determineStartingLanguage();
+        publicMethods.set(startingLanguage.id);
+
+        if (!startingLanguage.cookieWasSet) {
+            windowReload();
+        }
 
         return publicMethods;
     },

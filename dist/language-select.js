@@ -175,7 +175,13 @@ _module.service('cookieHandler', ['$cookies', function ($cookies) {
     };
 }]);
 
-_module.factory('languageStorage', ['$rootScope', '$window', 'languageSelectConfig', 'cookieHandler', function ($rootScope, $window, languageSelectConfig, cookieHandler) {
+_module.factory('windowReload', [function () {
+    return function () {
+        console.log('a');
+    };
+}]);
+
+_module.factory('languageStorage', ['$rootScope', '$window', 'languageSelectConfig', 'cookieHandler', 'windowReload', function ($rootScope, $window, languageSelectConfig, cookieHandler, windowReload) {
     var cookieSignature = 'selectedLanguage';
     var eventSignature = 'language-select:change';
 
@@ -232,7 +238,7 @@ _module.factory('languageStorage', ['$rootScope', '$window', 'languageSelectConf
         }
     };
 
-    var determineStartingLanguageId = function determineStartingLanguageId() {
+    var determineStartingLanguage = function determineStartingLanguage() {
         var rawCookieLanguageId = cookieHandler.get(cookieSignature);
         var rawBrowserLanguageId = $window.navigator.language || $window.navigator.userLanguage;
 
@@ -240,11 +246,18 @@ _module.factory('languageStorage', ['$rootScope', '$window', 'languageSelectConf
         var browserLanguageId = getLanguageIdIfValid(rawBrowserLanguageId);
         var defaultLanguageId = languageSelectConfig.defaultLanguageId();
 
-        return cookieLangaugeId || browserLanguageId || defaultLanguageId;
+        return {
+            id: cookieLangaugeId || browserLanguageId || defaultLanguageId,
+            cookieWasSet: Boolean(rawCookieLanguageId)
+        };
     };
 
-    var startingLanguageId = determineStartingLanguageId();
-    publicMethods.set(startingLanguageId);
+    var startingLanguage = determineStartingLanguage();
+    publicMethods.set(startingLanguage.id);
+
+    if (!startingLanguage.cookieWasSet) {
+        windowReload();
+    }
 
     return publicMethods;
 }]);

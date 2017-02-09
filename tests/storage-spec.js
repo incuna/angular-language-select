@@ -6,13 +6,16 @@ describe('languageStorage factory', function () {
 
         this.setupModule = function () {
             this.mockLanguageId = 'se';
+            this.windowReload = jasmine.createSpy('windowReload');
 
-            angular.mock.module('language-select');
+            angular.mock.module('language-select.storage-service')
+
             angular.mock.module({
                 languageSelectConfig: {
                     availableLanguages: () => this.languageChoices,
                     defaultLanguageId: () => this.mockLanguageId,
                 },
+                windowReload: this.windowReload
             });
 
             inject(function (languageStorage, languageSelectConfig, cookieHandler, $rootScope) {
@@ -21,6 +24,7 @@ describe('languageStorage factory', function () {
                 this.$cookies = cookieHandler;
                 this.$rootScope = $rootScope;
             });
+
         };
 
     });
@@ -139,6 +143,10 @@ describe('languageStorage factory', function () {
             expect(this.languageStorage.get()).toBe('pl');
         });
 
+        it('should not reload the browser', function () {
+            expect(this.windowReload).not.toHaveBeenCalled();
+        });
+        
     });
 
     describe('when there is no cookie', function () {
@@ -168,6 +176,14 @@ describe('languageStorage factory', function () {
 
         it('should use the browser language if it is in the choices', function () {
             expect(this.languageStorage.get()).toBe('en_us');
+        });
+
+        it('should set the cookie', function () {
+            expect(document.cookie).toBe('selectedLanguage=en_us');
+        });
+
+        it('should reload the browser', function () {
+            expect(this.windowReload).toHaveBeenCalled();
         });
 
     });
