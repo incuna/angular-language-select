@@ -8,7 +8,13 @@ module.exports = function (grunt) {
 
     if (grunt.option('help')) {
         // Load all tasks so they can be viewed in the help: grunt -h or --help.
-        require('load-grunt-tasks')(grunt);
+        require('load-grunt-tasks')(grunt, {
+            pattern: [
+                'grunt-*',
+                '@*/grunt-*',
+                '!grunt-incuna-plugins',
+            ],
+        });
     } else {
         // Use jit-grunt to only load necessary tasks for each invocation of grunt.
         require('jit-grunt')(grunt, {
@@ -158,19 +164,15 @@ module.exports = function (grunt) {
 
     grunt.registerTask('default', 'dev');
 
-    grunt.registerTask('dev', function () {
-        grunt.task.run([
-            'build',
-            'watch',
-        ]);
-    });
+    grunt.registerTask('dev', [
+        'build',
+        'watch',
+    ]);
 
-    grunt.registerTask('compilejs', function () {
-        grunt.task.run([
-            'babel',
-            'browserify',
-        ]);
-    });
+    grunt.registerTask('compilejs', [
+        'babel',
+        'browserify',
+    ]);
 
     grunt.registerTask('orderedSwig', [
         'clean:swig',
@@ -182,24 +184,19 @@ module.exports = function (grunt) {
         'ngtemplates',
     ]);
 
-    grunt.registerTask('test', function () {
-        grunt.task.run([
-            'eslint',
-            'jscs',
-            'clean',
-            'build',
-            'karma:ci',
-        ]);
-    });
+    grunt.registerTask('test', [
+        'eslint',
+        'jscs',
+        'clean',
+        'build',
+        'karma:ci',
+    ]);
 
-    grunt.registerTask('build', function () {
-        var tasks = [
-            'clean',
-            'compileTemplates',
-            'compilejs',
-            'uglify',
-        ];
-        grunt.task.run(tasks);
-    });
+    grunt.registerTask('build', [
+        'clean',
+        'compileTemplates',
+        'compilejs',
+        'uglify',
+    ]);
 
 };
