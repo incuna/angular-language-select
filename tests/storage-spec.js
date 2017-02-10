@@ -8,14 +8,14 @@ describe('languageStorage factory', function () {
             this.mockLanguageId = 'se';
             this.windowReload = jasmine.createSpy('windowReload');
 
-            angular.mock.module('language-select.storage-service')
+            angular.mock.module('language-select.storage-service');
 
             angular.mock.module({
                 languageSelectConfig: {
                     availableLanguages: () => this.languageChoices,
                     defaultLanguageId: () => this.mockLanguageId,
                 },
-                windowReload: this.windowReload
+                windowReload: this.windowReload,
             });
 
             inject(function (languageStorage, languageSelectConfig, cookieHandler, $rootScope) {
@@ -146,7 +146,7 @@ describe('languageStorage factory', function () {
         it('should not reload the browser', function () {
             expect(this.windowReload).not.toHaveBeenCalled();
         });
-        
+
     });
 
     describe('when there is no cookie', function () {

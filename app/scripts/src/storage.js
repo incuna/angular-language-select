@@ -37,8 +37,8 @@ module.factory('windowReload', [
     function ($window) {
         return function () {
             $window.location.reload();
-        }
-    }
+        };
+    },
 ]);
 
 module.factory('languageStorage', [
@@ -106,7 +106,7 @@ module.factory('languageStorage', [
             if (!navigatorLanguage) {
                 return '';
             }
-            
+
             return navigatorLanguage.replace(/[-_].*/, '');
         };
 
@@ -120,8 +120,8 @@ module.factory('languageStorage', [
 
             return {
                 id: cookieLangaugeId || browserLanguageId || defaultLanguageId,
-                cookieWasSet: Boolean(rawCookieLanguageId)
-            }
+                cookieWasSet: Boolean(rawCookieLanguageId),
+            };
         };
 
         const startingLanguage = determineStartingLanguage();
