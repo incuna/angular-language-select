@@ -33,9 +33,10 @@ module.service('cookieHandler', [
 ]);
 
 module.factory('windowReload', [
-    function () {
+    '$window',
+    function ($window) {
         return function () {
-            console.log('a');
+            $window.location.reload();
         }
     }
 ]);
