@@ -8,7 +8,13 @@ module.exports = function (grunt) {
 
     if (grunt.option('help')) {
         // Load all tasks so they can be viewed in the help: grunt -h or --help.
-        require('load-grunt-tasks')(grunt);
+        require('load-grunt-tasks')(grunt, {
+            pattern: [
+                'grunt-*',
+                '@*/grunt-*',
+                '!grunt-incuna-plugins',
+            ],
+        });
     } else {
         // Use jit-grunt to only load necessary tasks for each invocation of grunt.
         require('jit-grunt')(grunt, {
