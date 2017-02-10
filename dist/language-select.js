@@ -175,9 +175,9 @@ _module.service('cookieHandler', ['$cookies', function ($cookies) {
     };
 }]);
 
-_module.factory('windowReload', [function () {
+_module.factory('windowReload', ['$window', function ($window) {
     return function () {
-        console.log('a');
+        $window.location.reload();
     };
 }]);
 
@@ -238,9 +238,17 @@ _module.factory('languageStorage', ['$rootScope', '$window', 'languageSelectConf
         }
     };
 
+    var stripCulture = function stripCulture(navigatorLanguage) {
+        if (!navigatorLanguage) {
+            return '';
+        }
+
+        return navigatorLanguage.replace(/[-_].*/, '');
+    };
+
     var determineStartingLanguage = function determineStartingLanguage() {
         var rawCookieLanguageId = cookieHandler.get(cookieSignature);
-        var rawBrowserLanguageId = $window.navigator.language || $window.navigator.userLanguage;
+        var rawBrowserLanguageId = stripCulture($window.navigator.language || $window.navigator.userLanguage);
 
         var cookieLangaugeId = getLanguageIdIfValid(rawCookieLanguageId);
         var browserLanguageId = getLanguageIdIfValid(rawBrowserLanguageId);
