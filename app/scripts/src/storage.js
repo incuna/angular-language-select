@@ -47,7 +47,13 @@ module.factory('languageStorage', [
     'languageSelectConfig',
     'cookieHandler',
     'windowReload',
-    function ($rootScope, $window, languageSelectConfig, cookieHandler, windowReload) {
+    function (
+        $rootScope,
+        $window,
+        languageSelectConfig,
+        cookieHandler,
+        windowReload
+    ) {
         const cookieSignature = 'selectedLanguage';
         const eventSignature = 'language-select:change';
 
