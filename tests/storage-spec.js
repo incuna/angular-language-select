@@ -144,6 +144,9 @@ describe('languageStorage factory', function () {
         });
 
         it('should not reload the browser', function () {
+            if (angular.version.minor < 4) {
+                pending();
+            }
             expect(this.windowReload).not.toHaveBeenCalled();
         });
 
@@ -179,6 +182,9 @@ describe('languageStorage factory', function () {
         });
 
         it('should set the cookie stripping the culture', function () {
+            if (angular.version.minor < 4) {
+                pending();
+            }
             expect(document.cookie).toBe('selectedLanguage=en');
         });
 
