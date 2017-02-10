@@ -6,11 +6,12 @@ describe('languageSelectorController', function () {
 
         angular.mock.module('language-select');
 
-        inject(function ($controller, $rootScope, languageStorage, $window) {
+        angular.mock.module({windowReload: angular.noop});
+
+        inject(function ($controller, $rootScope, languageStorage) {
             this.$scope = $rootScope.$new();
             this.ctrl = $controller('languageSelectorController', this.$scope);
             this.languageStorage = languageStorage;
-            this.$window = $window;
         });
 
         this.defaultLanguage = 'en';

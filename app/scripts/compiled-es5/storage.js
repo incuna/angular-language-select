@@ -28,7 +28,13 @@ _module.service('cookieHandler', ['$cookies', function ($cookies) {
     };
 }]);
 
-_module.factory('languageStorage', ['$rootScope', '$window', 'languageSelectConfig', 'cookieHandler', function ($rootScope, $window, languageSelectConfig, cookieHandler) {
+_module.factory('windowReload', ['$window', function ($window) {
+    return function () {
+        $window.location.reload();
+    };
+}]);
+
+_module.factory('languageStorage', ['$rootScope', '$window', 'languageSelectConfig', 'cookieHandler', 'windowReload', function ($rootScope, $window, languageSelectConfig, cookieHandler, windowReload) {
     var cookieSignature = 'selectedLanguage';
     var eventSignature = 'language-select:change';
 
@@ -85,19 +91,34 @@ _module.factory('languageStorage', ['$rootScope', '$window', 'languageSelectConf
         }
     };
 
-    var determineStartingLanguageId = function determineStartingLanguageId() {
+    var stripCulture = function stripCulture(navigatorLanguage) {
+        if (!navigatorLanguage) {
+            return '';
+        }
+
+        return navigatorLanguage.replace(/[-_].*/, '');
+    };
+
+    var determineStartingLanguage = function determineStartingLanguage() {
         var rawCookieLanguageId = cookieHandler.get(cookieSignature);
-        var rawBrowserLanguageId = $window.navigator.language || $window.navigator.userLanguage;
+        var rawBrowserLanguageId = stripCulture($window.navigator.language || $window.navigator.userLanguage);
 
         var cookieLangaugeId = getLanguageIdIfValid(rawCookieLanguageId);
         var browserLanguageId = getLanguageIdIfValid(rawBrowserLanguageId);
         var defaultLanguageId = languageSelectConfig.defaultLanguageId();
 
-        return cookieLangaugeId || browserLanguageId || defaultLanguageId;
+        return {
+            id: cookieLangaugeId || browserLanguageId || defaultLanguageId,
+            cookieWasSet: Boolean(rawCookieLanguageId)
+        };
     };
 
-    var startingLanguageId = determineStartingLanguageId();
-    publicMethods.set(startingLanguageId);
+    var startingLanguage = determineStartingLanguage();
+    publicMethods.set(startingLanguage.id);
+
+    if (!startingLanguage.cookieWasSet) {
+        windowReload();
+    }
 
     return publicMethods;
 }]);

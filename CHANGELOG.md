@@ -1,3 +1,8 @@
+# upcoming
+
+* Reload browser when no cookie is set in order to reload locale files
+* Strip culture from `navigator.language` when checking browser language settings
+
 ## 2.1.0
 
 * Remove `lodash` dependency

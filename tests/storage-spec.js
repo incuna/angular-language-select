@@ -6,13 +6,16 @@ describe('languageStorage factory', function () {
 
         this.setupModule = function () {
             this.mockLanguageId = 'se';
+            this.windowReload = jasmine.createSpy('windowReload');
 
-            angular.mock.module('language-select');
+            angular.mock.module('language-select.storage-service');
+
             angular.mock.module({
                 languageSelectConfig: {
                     availableLanguages: () => this.languageChoices,
                     defaultLanguageId: () => this.mockLanguageId,
                 },
+                windowReload: this.windowReload,
             });
 
             inject(function (languageStorage, languageSelectConfig, cookieHandler, $rootScope) {
@@ -21,6 +24,7 @@ describe('languageStorage factory', function () {
                 this.$cookies = cookieHandler;
                 this.$rootScope = $rootScope;
             });
+
         };
 
     });
@@ -139,6 +143,13 @@ describe('languageStorage factory', function () {
             expect(this.languageStorage.get()).toBe('pl');
         });
 
+        it('should not reload the browser', function () {
+            if (angular.version.minor < 4) {
+                pending();
+            }
+            expect(this.windowReload).not.toHaveBeenCalled();
+        });
+
     });
 
     describe('when there is no cookie', function () {
@@ -155,7 +166,7 @@ describe('languageStorage factory', function () {
                     label: 'Polski',
                 },
                 {
-                    id: 'en_us',
+                    id: 'en',
                     label: 'English',
                 },
             ];
@@ -166,8 +177,19 @@ describe('languageStorage factory', function () {
             Object.defineProperty(window.navigator, 'language', {value: this.originalBrowserLanguage, configurable: true});
         });
 
-        it('should use the browser language if it is in the choices', function () {
-            expect(this.languageStorage.get()).toBe('en_us');
+        it('should use the browser language without the culture if it is in the choices', function () {
+            expect(this.languageStorage.get()).toBe('en');
+        });
+
+        it('should set the cookie stripping the culture', function () {
+            if (angular.version.minor < 4) {
+                pending();
+            }
+            expect(document.cookie).toBe('selectedLanguage=en');
+        });
+
+        it('should reload the browser', function () {
+            expect(this.windowReload).toHaveBeenCalled();
         });
 
     });
