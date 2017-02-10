@@ -1,4 +1,4 @@
-# upcoming
+### 2.1.1
 
 * Reload browser when no cookie is set in order to reload locale files
 * Strip culture from `navigator.language` when checking browser language settings
