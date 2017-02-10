@@ -101,9 +101,17 @@ module.factory('languageStorage', [
             }
         };
 
+        const stripCulture = function (navigatorLanguage) {
+            if (!navigatorLanguage) {
+                return '';
+            }
+            
+            return navigatorLanguage.replace(/[-_].*/, '');
+        };
+
         const determineStartingLanguage = function () {
             const rawCookieLanguageId = cookieHandler.get(cookieSignature);
-            const rawBrowserLanguageId = $window.navigator.language || $window.navigator.userLanguage;
+            const rawBrowserLanguageId = stripCulture($window.navigator.language || $window.navigator.userLanguage);
 
             const cookieLangaugeId = getLanguageIdIfValid(rawCookieLanguageId);
             const browserLanguageId = getLanguageIdIfValid(rawBrowserLanguageId);

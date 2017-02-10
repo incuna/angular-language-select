@@ -163,7 +163,7 @@ describe('languageStorage factory', function () {
                     label: 'Polski',
                 },
                 {
-                    id: 'en_us',
+                    id: 'en',
                     label: 'English',
                 },
             ];
@@ -174,12 +174,12 @@ describe('languageStorage factory', function () {
             Object.defineProperty(window.navigator, 'language', {value: this.originalBrowserLanguage, configurable: true});
         });
 
-        it('should use the browser language if it is in the choices', function () {
-            expect(this.languageStorage.get()).toBe('en_us');
+        it('should use the browser language without the culture if it is in the choices', function () {
+            expect(this.languageStorage.get()).toBe('en');
         });
 
-        it('should set the cookie', function () {
-            expect(document.cookie).toBe('selectedLanguage=en_us');
+        it('should set the cookie stripping the culture', function () {
+            expect(document.cookie).toBe('selectedLanguage=en');
         });
 
         it('should reload the browser', function () {
