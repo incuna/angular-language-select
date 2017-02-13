@@ -116,9 +116,23 @@ module.factory('languageStorage', [
             return navigatorLanguage.replace(/[-_].*/, '');
         };
 
+        const getUserLanguage = function () {
+            /*
+             * navigator.languages - consistent API supported by latest Chrome and Firefox
+             * navigator.language - incosistent (Chrome doesn't reflect user selected language), but widely supported (except for IE < 11)
+             * navigator.userLanguage - supported by IE < 11
+             */
+
+            if ($window.navigator.languages) {
+                return $window.navigator.languages[0];
+            }
+
+            return $window.navigator.language || $window.navigator.userLanguage;
+        };
+
         const determineStartingLanguage = function () {
             const rawCookieLanguageId = cookieHandler.get(cookieSignature);
-            const rawBrowserLanguageId = stripCulture($window.navigator.language || $window.navigator.userLanguage);
+            const rawBrowserLanguageId = stripCulture(getUserLanguage());
 
             const cookieLangaugeId = getLanguageIdIfValid(rawCookieLanguageId);
             const browserLanguageId = getLanguageIdIfValid(rawBrowserLanguageId);
