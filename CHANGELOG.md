@@ -1,4 +1,4 @@
-# upcoming
+### 2.1.2
 
 * BUGFIX: Chrome doesn't change `navigator.language` when user changes their languages settings. It uses the new `navigator.languages` API.
 
