@@ -116,9 +116,17 @@ module.factory('languageStorage', [
             return navigatorLanguage.replace(/[-_].*/, '');
         };
 
+        const getUserLanguage = function () {
+            if ($window.navigator.languages) {
+                return $window.navigator.languages[0];
+            }
+
+            return $window.navigator.language || $window.navigator.userLanguage;
+        };
+
         const determineStartingLanguage = function () {
             const rawCookieLanguageId = cookieHandler.get(cookieSignature);
-            const rawBrowserLanguageId = stripCulture($window.navigator.language || $window.navigator.userLanguage);
+            const rawBrowserLanguageId = stripCulture(getUserLanguage());
 
             const cookieLangaugeId = getLanguageIdIfValid(rawCookieLanguageId);
             const browserLanguageId = getLanguageIdIfValid(rawBrowserLanguageId);

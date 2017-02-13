@@ -1,3 +1,7 @@
+# upcoming
+
+* BUGFIX: Chrome doesn't change `navigator.language` when user changes their languages settings. It uses the new `navigator.languages` API.
+
 ### 2.1.1
 
 * Reload browser when no cookie is set in order to reload locale files

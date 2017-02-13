@@ -99,9 +99,17 @@ _module.factory('languageStorage', ['$rootScope', '$window', 'languageSelectConf
         return navigatorLanguage.replace(/[-_].*/, '');
     };
 
+    var getUserLanguage = function getUserLanguage() {
+        if ($window.navigator.languages) {
+            return $window.navigator.languages[0];
+        }
+
+        return $window.navigator.language || $window.navigator.userLanguage;
+    };
+
     var determineStartingLanguage = function determineStartingLanguage() {
         var rawCookieLanguageId = cookieHandler.get(cookieSignature);
-        var rawBrowserLanguageId = stripCulture($window.navigator.language || $window.navigator.userLanguage);
+        var rawBrowserLanguageId = stripCulture(getUserLanguage());
 
         var cookieLangaugeId = getLanguageIdIfValid(rawCookieLanguageId);
         var browserLanguageId = getLanguageIdIfValid(rawBrowserLanguageId);
