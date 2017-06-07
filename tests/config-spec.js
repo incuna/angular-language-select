@@ -53,40 +53,24 @@ describe('languageSelectConfig', function () {
                 expect(this.languageSelectConfig.reloadOnChange()).toBe(false);
             });
 
-            it('should be false when set to null', function () {
-                this.languageSelectConfigProvider.setReloadOnChange(null);
-                expect(this.languageSelectConfig.reloadOnChange()).toBe(false);
-            });
-
-            it('should be false when set to 0', function () {
-                this.languageSelectConfigProvider.setReloadOnChange(0);
-                expect(this.languageSelectConfig.reloadOnChange()).toBe(false);
-            });
-
-            it('should be true when called with undefined', function () {
-                this.languageSelectConfigProvider.setReloadOnChange();
+            it('should be true when set to true', function () {
+                this.languageSelectConfigProvider.setReloadOnChange(true);
                 expect(this.languageSelectConfig.reloadOnChange()).toBe(true);
-            });
-
-            it('should not error when set to undefined', function () {
-                expect(() => {
-                    this.languageSelectConfigProvider.setReloadOnChange();
-                }).not.toThrowError('Cannot set reloadOnChange to undefined [undefined]');
             });
 
             it('should error when set to anything else', function () {
                 expect(() => {
                     this.languageSelectConfigProvider.setReloadOnChange('');
-                }).toThrowError('Cannot set reloadOnChange to "" [string]');
+                }).toThrowError('setReloadOnChange: value must be true or false');
                 expect(() => {
                     this.languageSelectConfigProvider.setReloadOnChange('some string');
-                }).toThrowError('Cannot set reloadOnChange to "some string" [string]');
+                }).toThrowError('setReloadOnChange: value must be true or false');
                 expect(() => {
                     this.languageSelectConfigProvider.setReloadOnChange({key: 'value'});
-                }).toThrowError('Cannot set reloadOnChange to {"key":"value"} [object]');
+                }).toThrowError('setReloadOnChange: value must be true or false');
                 expect(() => {
                     this.languageSelectConfigProvider.setReloadOnChange(['value']);
-                }).toThrowError('Cannot set reloadOnChange to ["value"] [object]');
+                }).toThrowError('setReloadOnChange: value must be true or false');
             });
 
         });

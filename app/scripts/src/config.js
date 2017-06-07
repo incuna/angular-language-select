@@ -33,11 +33,10 @@ module.provider('languageSelectConfig', function () {
             defaultLanguageId = value;
         },
         setReloadOnChange: function (value) {
-            if (value === false || value === null || value === 0) {
-                reloadOnChange = false;
-            } else if (typeof value !== 'undefined') {
-                throw new Error('Cannot set reloadOnChange to ' + JSON.stringify(value) + ' [' + typeof value + ']');
+            if (typeof value !== 'boolean') {
+                throw new Error('setReloadOnChange: value must be true or false');
             }
+            reloadOnChange = value;
         },
     };
 });
