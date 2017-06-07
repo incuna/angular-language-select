@@ -71,7 +71,7 @@ describe('languageSelectConfig', function () {
             it('should not error when set to undefined', function () {
                 expect(() => {
                     this.languageSelectConfigProvider.setReloadOnChange();
-                }).not.toThrowError('Cannot set reloadOnChange to "" [undefined]');
+                }).not.toThrowError('Cannot set reloadOnChange to undefined [undefined]');
             });
 
             it('should error when set to anything else', function () {
