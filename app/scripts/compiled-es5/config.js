@@ -1,5 +1,7 @@
 'use strict';
 
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
 var _libraries = require('./libraries');
 
 var _module = _libraries.angular.module('language-select.config', []);
@@ -35,6 +37,8 @@ _module.provider('languageSelectConfig', function () {
         setReloadOnChange: function setReloadOnChange(value) {
             if (value === false || value === null || value === 0) {
                 _reloadOnChange = false;
+            } else if (typeof value !== 'undefined') {
+                throw new Error('Cannot set reloadOnChange to ' + JSON.stringify(value) + ' [' + (typeof value === 'undefined' ? 'undefined' : _typeof(value)) + ']');
             }
         }
     };

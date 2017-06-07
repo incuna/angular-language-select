@@ -1,6 +1,8 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 'use strict';
 
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
 var _libraries = require('./libraries');
 
 var _module = _libraries.angular.module('language-select.config', []);
@@ -36,6 +38,8 @@ _module.provider('languageSelectConfig', function () {
         setReloadOnChange: function setReloadOnChange(value) {
             if (value === false || value === null || value === 0) {
                 _reloadOnChange = false;
+            } else if (typeof value !== 'undefined') {
+                throw new Error('Cannot set reloadOnChange to ' + JSON.stringify(value) + ' [' + (typeof value === 'undefined' ? 'undefined' : _typeof(value)) + ']');
             }
         }
     };
