@@ -56,11 +56,16 @@ describe('languageSelectorController', function () {
         });
 
         it('should call windowReload', function () {
-            expect(this.windowReloadMock).not.toHaveBeenCalled();
+            var getReloadCalls = () => this.windowReloadMock.calls.count();
+            var countBefore = getReloadCalls();
+
             var ctrl = this.makeCtrl();
-            expect(this.windowReloadMock).not.toHaveBeenCalled();
+            var countAfterCtrlInit = getReloadCalls();
+            expect(countAfterCtrlInit).toBe(countBefore);
+
             ctrl.changeLanguage('foo');
-            expect(this.windowReloadMock).toHaveBeenCalled();
+            var countAfterChangeCall = getReloadCalls();
+            expect(countAfterChangeCall).toBe(countAfterCtrlInit + 1);
         });
 
     });
