@@ -1,3 +1,8 @@
+# Upcoming
+
+* FEAT: add `setReloadOnChange()` config setting to control the window reloading when the language changes (default: `true`)
+* BUGFIX: update `selectedLanguageId` on controller scope when the language is changed
+
 ### 2.1.2
 
 * BUGFIX: Chrome doesn't change `navigator.language` when user changes their languages settings. It uses the new `navigator.languages` API.
