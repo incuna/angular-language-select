@@ -16,11 +16,16 @@ module.controller('languageSelectorController', [
         languageStorage,
         windowReload
     ) {
-        this.selectedLanguageId = languageStorage.get();
         this.languageChoices = languageStorage.getLanguageChoices();
+
+        const refreshLanguageId = () => {
+            this.selectedLanguageId = languageStorage.get();
+        };
+        refreshLanguageId();
 
         this.changeLanguage = function (selectedLanguageId = this.selectedLanguageId) {
             languageStorage.set(selectedLanguageId);
+            refreshLanguageId();
             windowReload();
         };
     },
