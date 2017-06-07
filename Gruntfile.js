@@ -1,6 +1,5 @@
 /*eslint object-curly-newline: ["error", "always"]*/
 /* eslint-env node */
-/* global module, require */
 
 'use strict';
 
@@ -23,12 +22,38 @@ module.exports = function (grunt) {
         });
     }
 
-    const ngTemplatesPaths = require('grunt-incuna-plugins')['ng-templates-paths']();
-    let ngTemplatesForIncLanguageSelect = {};
+    let ngTemplatesConfig = {}; // eslint-disable-line object-curly-newline
+    const generateNgTemplatesConfig = function () {
+        const ngTemplatesPaths = require('grunt-incuna-plugins')['ng-templates-paths']();
+        ngTemplatesConfig = ngTemplatesPaths.generate('inc-language-select', 'app', '<%= config.compiledScriptsDir %>');
+    };
+
     try {
-        ngTemplatesForIncLanguageSelect = ngTemplatesPaths.generate('inc-language-select', 'app', '<%= config.compiledScriptsDir %>');
+        generateNgTemplatesConfig();
     } catch (error) {
-        grunt.log.warn('inc-language-select template paths do not exist. Run grunt again until this message does not show.');
+        // Make sure ngtemplates config is available by running a sub process
+        // and only continuing when done. Use a grunt option to avoid recursion.
+        const optionToSkipRegeneration = 'ignore-ngtemplates-generate';
+        if (!grunt.option(optionToSkipRegeneration)) {
+            var colourOption = '--color';
+            if (grunt.option('color') === false) {
+                colourOption = '--no-color';
+            }
+            const command = 'grunt ' + colourOption + ' orderedSwig --' + optionToSkipRegeneration;
+            const commandOutput = require('child_process').execSync(command, {
+                stdio: 'pipe',
+            });
+            grunt.log.writeln('Making sure ngtemplates config is available...');
+            if (grunt.option('verbose') || grunt.option('debug')) {
+                // Output the sub process with indentation.
+                grunt.log.writeln('    ' + command);
+                const resultStream = require('pad-stream')(4, ' ');
+                resultStream.pipe(process.stdout);
+                resultStream.write(commandOutput);
+            }
+            // The files should be available now, so regenerate the config.
+            generateNgTemplatesConfig();
+        }
     }
 
     grunt.initConfig({
@@ -151,7 +176,7 @@ module.exports = function (grunt) {
                 },
             },
         },
-        ngtemplates: ngTemplatesForIncLanguageSelect,
+        ngtemplates: ngTemplatesConfig,
         karma: {
             options: {
                 configFile: 'tests/conf/karma.conf.js',
