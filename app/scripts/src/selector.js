@@ -11,17 +11,17 @@ var module = angular.module('language-select.selector', [
 
 module.controller('languageSelectorController', [
     'languageStorage',
-    '$window',
+    'windowReload',
     function (
         languageStorage,
-        $window
+        windowReload
     ) {
         this.selectedLanguageId = languageStorage.get();
         this.languageChoices = languageStorage.getLanguageChoices();
 
         this.changeLanguage = function (selectedLanguageId = this.selectedLanguageId) {
             languageStorage.set(selectedLanguageId);
-            $window.location.reload();
+            windowReload();
         };
     },
 ]);

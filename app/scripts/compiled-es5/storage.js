@@ -28,9 +28,11 @@ _module.service('cookieHandler', ['$cookies', function ($cookies) {
     };
 }]);
 
-_module.factory('windowReload', ['$window', function ($window) {
+_module.factory('windowReload', ['$window', 'languageSelectConfig', function ($window, languageSelectConfig) {
     return function () {
-        $window.location.reload();
+        if (languageSelectConfig.reloadOnChange()) {
+            $window.location.reload();
+        }
     };
 }]);
 

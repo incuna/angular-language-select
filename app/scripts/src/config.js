@@ -10,6 +10,7 @@ module.provider('languageSelectConfig', function () {
         },
     ];
     let defaultLanguageId = null;
+    let reloadOnChange = true;
 
     return {
         $get: function () {
@@ -20,6 +21,9 @@ module.provider('languageSelectConfig', function () {
                 defaultLanguageId: function () {
                     return defaultLanguageId || availableLanguages[0].id;
                 },
+                reloadOnChange: function () {
+                    return reloadOnChange;
+                },
             };
         },
         setAvailableLanguages: function (value) {
@@ -27,6 +31,11 @@ module.provider('languageSelectConfig', function () {
         },
         setDefaultLanguage: function (value) {
             defaultLanguageId = value;
+        },
+        setReloadOnChange: function (value) {
+            if (value === false || value === null || value === 0) {
+                reloadOnChange = false;
+            }
         },
     };
 });

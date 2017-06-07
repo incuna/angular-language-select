@@ -10,6 +10,7 @@ _module.provider('languageSelectConfig', function () {
         label: 'English'
     }];
     var _defaultLanguageId = null;
+    var _reloadOnChange = true;
 
     return {
         $get: function $get() {
@@ -19,6 +20,9 @@ _module.provider('languageSelectConfig', function () {
                 },
                 defaultLanguageId: function defaultLanguageId() {
                     return _defaultLanguageId || _availableLanguages[0].id;
+                },
+                reloadOnChange: function reloadOnChange() {
+                    return _reloadOnChange;
                 }
             };
         },
@@ -27,6 +31,11 @@ _module.provider('languageSelectConfig', function () {
         },
         setDefaultLanguage: function setDefaultLanguage(value) {
             _defaultLanguageId = value;
+        },
+        setReloadOnChange: function setReloadOnChange(value) {
+            if (value === false || value === null || value === 0) {
+                _reloadOnChange = false;
+            }
         }
     };
 });
