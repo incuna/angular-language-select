@@ -24,6 +24,12 @@ module.exports = function (grunt) {
     }
 
     const ngTemplatesPaths = require('grunt-incuna-plugins')['ng-templates-paths']();
+    let ngTemplatesForIncLanguageSelect = {};
+    try {
+        ngTemplatesForIncLanguageSelect = ngTemplatesPaths.generate('inc-language-select', 'app', '<%= config.compiledScriptsDir %>');
+    } catch (error) {
+        grunt.log.warn('inc-language-select template paths do not exist. Run grunt again until this message does not show.');
+    }
 
     grunt.initConfig({
 
@@ -145,7 +151,7 @@ module.exports = function (grunt) {
                 },
             },
         },
-        ngtemplates: ngTemplatesPaths.generate('inc-language-select', 'app', '<%= config.compiledScriptsDir %>'),
+        ngtemplates: ngTemplatesForIncLanguageSelect,
         karma: {
             options: {
                 configFile: 'tests/conf/karma.conf.js',
