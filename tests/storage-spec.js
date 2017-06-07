@@ -1,5 +1,41 @@
 import '../app/scripts/src/main';
 
+describe('windowReload', function () {
+
+    beforeEach(function () {
+
+        angular.mock.module('language-select.storage-service');
+
+        this.$windowMock = {
+            location: jasmine.createSpyObj('location', [
+                'reload',
+            ]),
+        };
+        this.languageSelectConfigMock = jasmine.createSpyObj('languageSelectConfig', ['reloadOnChange']);
+        angular.mock.module({
+            $window: this.$windowMock,
+            languageSelectConfig: this.languageSelectConfigMock,
+        });
+
+        inject(function (windowReload) {
+            this.windowReload = windowReload;
+        });
+    });
+
+    it('should reload based on languageSelectConfig.reloadOnChange()', function () {
+        expect(this.$windowMock.location.reload).not.toHaveBeenCalled();
+
+        this.languageSelectConfigMock.reloadOnChange.and.returnValue(false);
+        this.windowReload();
+        expect(this.$windowMock.location.reload).not.toHaveBeenCalled();
+
+        this.languageSelectConfigMock.reloadOnChange.and.returnValue(true);
+        this.windowReload();
+        expect(this.$windowMock.location.reload).toHaveBeenCalled();
+    });
+
+});
+
 describe('languageStorage factory', function () {
 
     beforeAll(function () {
