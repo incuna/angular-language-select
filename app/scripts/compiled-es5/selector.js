@@ -9,15 +9,22 @@ require('./storage');
 
 var _module = _libraries.angular.module('language-select.selector', ['language-select.storage-service']);
 
-_module.controller('languageSelectorController', ['languageStorage', '$window', function (languageStorage, $window) {
-    this.selectedLanguageId = languageStorage.get();
+_module.controller('languageSelectorController', ['languageStorage', 'windowReload', function (languageStorage, windowReload) {
+    var _this = this;
+
     this.languageChoices = languageStorage.getLanguageChoices();
+
+    var refreshLanguageId = function refreshLanguageId() {
+        _this.selectedLanguageId = languageStorage.get();
+    };
+    refreshLanguageId();
 
     this.changeLanguage = function () {
         var selectedLanguageId = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.selectedLanguageId;
 
         languageStorage.set(selectedLanguageId);
-        $window.location.reload();
+        refreshLanguageId();
+        windowReload();
     };
 }]);
 

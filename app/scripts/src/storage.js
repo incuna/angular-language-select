@@ -34,9 +34,15 @@ module.service('cookieHandler', [
 
 module.factory('windowReload', [
     '$window',
-    function ($window) {
+    'languageSelectConfig',
+    function (
+        $window,
+        languageSelectConfig
+    ) {
         return function () {
-            $window.location.reload();
+            if (languageSelectConfig.reloadOnChange()) {
+                $window.location.reload();
+            }
         };
     },
 ]);

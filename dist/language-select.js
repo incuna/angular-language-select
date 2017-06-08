@@ -11,6 +11,7 @@ _module.provider('languageSelectConfig', function () {
         label: 'English'
     }];
     var _defaultLanguageId = null;
+    var _reloadOnChange = true;
 
     return {
         $get: function $get() {
@@ -20,6 +21,9 @@ _module.provider('languageSelectConfig', function () {
                 },
                 defaultLanguageId: function defaultLanguageId() {
                     return _defaultLanguageId || _availableLanguages[0].id;
+                },
+                reloadOnChange: function reloadOnChange() {
+                    return _reloadOnChange;
                 }
             };
         },
@@ -28,6 +32,12 @@ _module.provider('languageSelectConfig', function () {
         },
         setDefaultLanguage: function setDefaultLanguage(value) {
             _defaultLanguageId = value;
+        },
+        setReloadOnChange: function setReloadOnChange(value) {
+            if (typeof value !== 'boolean') {
+                throw new Error('setReloadOnChange: value must be true or false');
+            }
+            _reloadOnChange = value;
         }
     };
 });
@@ -112,15 +122,22 @@ require('./storage');
 
 var _module = _libraries.angular.module('language-select.selector', ['language-select.storage-service']);
 
-_module.controller('languageSelectorController', ['languageStorage', '$window', function (languageStorage, $window) {
-    this.selectedLanguageId = languageStorage.get();
+_module.controller('languageSelectorController', ['languageStorage', 'windowReload', function (languageStorage, windowReload) {
+    var _this = this;
+
     this.languageChoices = languageStorage.getLanguageChoices();
+
+    var refreshLanguageId = function refreshLanguageId() {
+        _this.selectedLanguageId = languageStorage.get();
+    };
+    refreshLanguageId();
 
     this.changeLanguage = function () {
         var selectedLanguageId = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.selectedLanguageId;
 
         languageStorage.set(selectedLanguageId);
-        $window.location.reload();
+        refreshLanguageId();
+        windowReload();
     };
 }]);
 
@@ -175,9 +192,11 @@ _module.service('cookieHandler', ['$cookies', function ($cookies) {
     };
 }]);
 
-_module.factory('windowReload', ['$window', function ($window) {
+_module.factory('windowReload', ['$window', 'languageSelectConfig', function ($window, languageSelectConfig) {
     return function () {
-        $window.location.reload();
+        if (languageSelectConfig.reloadOnChange()) {
+            $window.location.reload();
+        }
     };
 }]);
 

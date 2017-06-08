@@ -52,9 +52,10 @@
     "karma-browserify": "5.1.0",
     "karma-firefox-launcher": "1.0.0",
     "karma-jasmine": "1.0.2",
-    "load-grunt-tasks": "3.x"
+    "load-grunt-tasks": "3.x",
+    "pad-stream": "^2.0.0"
   },
   "scripts": {
-    "test": "grunt test"
+    "test": "grunt clean && grunt test"
   }
 }

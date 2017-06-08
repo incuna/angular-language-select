@@ -1,8 +1,44 @@
 import '../app/scripts/src/main';
 
+describe('windowReload', function () {
+
+    beforeEach(function () {
+
+        angular.mock.module('language-select.storage-service');
+
+        this.$windowMock = {
+            location: jasmine.createSpyObj('location', [
+                'reload',
+            ]),
+        };
+        this.languageSelectConfigMock = jasmine.createSpyObj('languageSelectConfig', ['reloadOnChange']);
+        angular.mock.module({
+            $window: this.$windowMock,
+            languageSelectConfig: this.languageSelectConfigMock,
+        });
+
+        inject(function (windowReload) {
+            this.windowReload = windowReload;
+        });
+    });
+
+    it('should reload based on languageSelectConfig.reloadOnChange()', function () {
+        expect(this.$windowMock.location.reload).not.toHaveBeenCalled();
+
+        this.languageSelectConfigMock.reloadOnChange.and.returnValue(false);
+        this.windowReload();
+        expect(this.$windowMock.location.reload).not.toHaveBeenCalled();
+
+        this.languageSelectConfigMock.reloadOnChange.and.returnValue(true);
+        this.windowReload();
+        expect(this.$windowMock.location.reload).toHaveBeenCalled();
+    });
+
+});
+
 describe('languageStorage factory', function () {
 
-    beforeAll(function () {
+    beforeEach(function () {
 
         this.setupModule = function () {
             this.mockLanguageId = 'se';
@@ -18,13 +54,18 @@ describe('languageStorage factory', function () {
                 windowReload: this.windowReload,
             });
 
-            inject(function (languageStorage, languageSelectConfig, cookieHandler, $rootScope) {
+            inject(function (languageStorage, cookieHandler, $rootScope) {
                 this.languageStorage = languageStorage;
-                this.languageSelectConfig = languageSelectConfig;
-                this.$cookies = cookieHandler;
+                this.cookieHandler = cookieHandler;
                 this.$rootScope = $rootScope;
             });
 
+            spyOn(this.cookieHandler, 'get');
+            spyOn(this.cookieHandler, 'put');
+            this.resetCookieHandlerToSource = function () {
+                this.cookieHandler.get.and.stub();
+                this.cookieHandler.put.and.stub();
+            };
         };
 
     });
@@ -96,9 +137,9 @@ describe('languageStorage factory', function () {
         describe('set method', function () {
 
             it('should set the cookie', function () {
-                expect(this.$cookies.get(this.languageStorage.getCookieSingature())).not.toBe('de');
+                expect(this.cookieHandler.put).not.toHaveBeenCalled();
                 this.languageStorage.set('de');
-                expect(this.$cookies.get(this.languageStorage.getCookieSingature())).toBe('de');
+                expect(this.cookieHandler.put).toHaveBeenCalledWith('selectedLanguage', 'de');
             });
 
             it('should emit an event', function () {
@@ -132,6 +173,7 @@ describe('languageStorage factory', function () {
             ];
 
             this.setupModule();
+            this.resetCookieHandlerToSource();
         });
 
         it('should set the default language from the cookie', function () {
