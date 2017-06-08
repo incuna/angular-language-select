@@ -1,4 +1,4 @@
-# Upcoming
+## 2.2.0
 
 * FEAT: add `setReloadOnChange()` config setting to control the window reloading when the language changes (default: `true`)
 * BUGFIX: update `selectedLanguageId` on controller scope when the language is changed
