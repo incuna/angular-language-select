@@ -56,6 +56,6 @@
     "pad-stream": "^2.0.0"
   },
   "scripts": {
-    "test": "grunt test"
+    "test": "grunt clean && grunt test"
   }
 }
